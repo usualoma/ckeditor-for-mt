@@ -1,0 +1,105 @@
+<input type="hidden" name="ckeditor_blog_config_beacon" value="1"/>
+<p style="border-bottom: 1px solid #ccc;">
+<__trans phrase="Setting for fields which edited by CKEditor.">
+</p>
+
+<mtapp:setting
+	id="ckeditor_for_body"
+	label="<__trans phrase="Eneble for body.">"
+>
+
+<ul><li>
+<input type="checkbox" id="ckeditor_for_body" name="ckeditor_for_body" value="1" <mt:if name="ckeditor_for_body">checked="checked"</mt:if> />
+</li></ul>
+
+</mtapp:setting>
+
+<mtapp:setting
+	id="ckeditor_for_excerpt"
+	label="<__trans phrase="Eneble for excerpt.">"
+>
+
+<ul><li>
+<input type="checkbox" id="ckeditor_for_excerpt" name="ckeditor_for_excerpt" value="1" <mt:if name="ckeditor_for_excerpt">checked="checked"</mt:if> />
+</li></ul>
+
+</mtapp:setting>
+
+<MTCKEditorIncludeCustomizedFields>
+<mt:if var="ckeditor_customized_fields">
+<mtapp:setting
+	id="ckeditor_fields"
+	label="<__trans phrase="CustomFields"><br />(<__trans phrase="Entry">)"
+>
+
+<ul>
+<MTLoop name="ckeditor_customized_fields" sort_by="key numeric">
+<MTSetVarBlock name="blog_id"><mt:var name="__value__{blog_id}"></MTSetVarBlock>
+<li id="ckeditor_fields_item_<mt:var name="__value__{key}">">
+<input type="checkbox" id="ckeditor_fields_<mt:var name="__value__{key}">" name="ckeditor_field_ids" value="<mt:var name="__value__{key}">" /><label for="ckeditor_fields_<mt:var name="__value__{key}">">: <mt:var name="__value__{name}"></label>
+<script type="text/javascript">
+(function () {
+var item = getByID('ckeditor_fields_item_<mt:var name="__value__{key}">');
+var input = getByID('ckeditor_fields_<mt:var name="__value__{key}">');
+<mt:if name="__value__{checked}">
+input.checked = 'checked';
+</mt:if>
+<mt:unless name="blog_id">
+input.disabled = 'disabled';
+item.onclick = function() {
+	alert('<__trans phrase="This is system-wide field.\nYou can change this value at system-wide plugin configuration page.">');
+};
+</mt:unless>
+})();
+</script>
+</li>
+</MTLoop>
+</ul>
+
+</mtapp:setting>
+</mt:if>
+
+<mt:if var="ckeditor_customized_fields_page">
+<mtapp:setting
+	id="ckeditor_fields_page"
+	label="<__trans phrase="CustomFields"><br />(<__trans phrase="Page">)"
+>
+<ul>
+<MTLoop name="ckeditor_customized_fields_page" sort_by="key numeric">
+<MTSetVarBlock name="blog_id"><mt:var name="__value__{blog_id}"></MTSetVarBlock>
+<li id="ckeditor_fields_item_<mt:var name="__value__{key}">">
+<input type="checkbox" id="ckeditor_fields_<mt:var name="__value__{key}">" name="ckeditor_field_ids" value="<mt:var name="__value__{key}">" /><label for="ckeditor_fields_<mt:var name="__value__{key}">">: <mt:var name="__value__{name}"></label>
+<script type="text/javascript">
+(function () {
+var item = getByID('ckeditor_fields_item_<mt:var name="__value__{key}">');
+var input = getByID('ckeditor_fields_<mt:var name="__value__{key}">');
+<mt:if name="__value__{checked}">
+input.checked = 'checked';
+</mt:if>
+<mt:unless name="blog_id">
+input.disabled = 'disabled';
+item.onclick = function() {
+	alert('<__trans phrase="This is system-wide field.\nYou can change this value at system-wide plugin configuration page.">');
+};
+</mt:unless>
+})();
+</script>
+</li>
+</MTLoop>
+</ul>
+</mtapp:setting>
+</mt:if>
+
+<p style="border-bottom: 1px solid #ccc;">
+<__trans phrase="Settings for editor&#039;s buttons, fonts and more.">
+</p>
+<mtapp:setting
+	id="ckeditor_settings_for_editor"
+	label=""
+>
+
+<ul><li>
+<a href="<mt:var name="mt_url">?__mode=cfg_plugins"><__trans phrase="[_1] Plugin Settings" params="<__trans phrase="System">"></a>
+</li></ul>
+
+</mtapp:setting>
