@@ -76,15 +76,15 @@ CKEDITOR.config.coreStyles_bold = { element : 'b' };
 CKEDITOR.config.coreStyles_italic = { element : 'i' };
 // ブログ毎に表示するボタンを変更する
 if (CKEditorBlogID == 1) {
-    CKEDITOR.config.toolbar = [
-        ['Bold','Italic','Underline','Strike','-','Subscript','Superscript']
-    ];
+    CKEDITOR.config.toolbar = &#x5b;
+        &#x5b;'Bold','Italic','Underline','Strike','-','Subscript','Superscript'&#x5d;
+    &#x5d;;
 }
 // テーマ毎に表示するボタンを変更する
 if (CKEditorBlogThemeID = 'professional_blog') {
-    CKEDITOR.config.toolbar = [
-        ['Bold','Italic','Underline','Strike','-','Subscript','Superscript']
-    ];
+    CKEDITOR.config.toolbar = &#x5b;
+        &#x5b;'Bold','Italic','Underline','Strike','-','Subscript','Superscript'&#x5d;
+    &#x5d;;
 }
 // ブログ記事の編集の場合だけ設定を変更する
 if (CKEditorObjectType = 'entry') {

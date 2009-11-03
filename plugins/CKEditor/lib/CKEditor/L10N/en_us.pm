@@ -22,14 +22,14 @@ CKEDITOR.config.config.pasteFromWordRemoveStyle = true;
 CKEDITOR.config.coreStyles_bold = { element : 'b' };
 CKEDITOR.config.coreStyles_italic = { element : 'i' };
 if (CKEditorBlogID == 1) {
-    CKEDITOR.config.toolbar = [
-        ['Bold','Italic','Underline','Strike','-','Subscript','Superscript']
-    ];
+    CKEDITOR.config.toolbar = &#x5b;
+        &#x5b;'Bold','Italic','Underline','Strike','-','Subscript','Superscript'&#x5d;
+    &#x5d;;
 }
 if (CKEditorBlogThemeID = 'professional_blog') {
-    CKEDITOR.config.toolbar = [
-        ['Bold','Italic','Underline','Strike','-','Subscript','Superscript']
-    ];
+    CKEDITOR.config.toolbar = &#x5b;
+        &#x5b;'Bold','Italic','Underline','Strike','-','Subscript','Superscript'&#x5d;
+    &#x5d;;
 }
 if (CKEditorObjectType = 'entry') {
 	// Editing entry.
