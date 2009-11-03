@@ -74,5 +74,25 @@ CKEDITOR.config.config.pasteFromWordRemoveStyle = true;
 CKEDITOR.config.coreStyles_bold = { element : 'b' };
 // 「斜体」ボタンを押した際に「i」要素を設定する。
 CKEDITOR.config.coreStyles_italic = { element : 'i' };
+// ブログ毎に表示するボタンを変更する
+if (CKEditorBlogID == 1) {
+    CKEDITOR.config.toolbar = [
+        ['Bold','Italic','Underline','Strike','-','Subscript','Superscript']
+    ];
+}
+// テーマ毎に表示するボタンを変更する
+if (CKEditorBlogThemeID = 'professional_blog') {
+    CKEDITOR.config.toolbar = [
+        ['Bold','Italic','Underline','Strike','-','Subscript','Superscript']
+    ];
+}
+// ブログ記事の編集の場合だけ設定を変更する
+if (CKEditorObjectType = 'entry') {
+	// Editing entry.
+}
+// ページの編集の場合だけ設定を変更する
+if (CKEditorObjectType = 'page') {
+	// Editing page.
+}
 __EOC__
 );
