@@ -128,6 +128,9 @@ __EOH__
 	}
 
 	if ($app->can('user')) {
+		my $q = $app->param;
+		my $type = $q->param('_type');
+
 		my $blog = $app->blog;
 		my $lang = $app->user->preferred_language;
 		if (-e File::Spec->catfile(
@@ -164,6 +167,7 @@ $defaults
 <script type="text/javascript">
 var CKEditorBlogID = @{[ $blog->id ]};
 var CKEditorBlogThemeID = '@{[ $blog->theme_id ]}';
+var CKEditorObjectType = '@{[ $type ]}';
 (function() {
 	var editor_textarea_focus = Editor.Textarea.prototype.focus;
 	function focus() {
