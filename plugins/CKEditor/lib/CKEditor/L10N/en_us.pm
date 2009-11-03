@@ -16,6 +16,12 @@ use vars qw( %Lexicon );
 
     'ThemeAdvancedFontSizesExample' => 'eg. Big text=30px,Small text=small,My Text Size=.mytextsize',
     'ThemeAdvancedFontsNote' => '',
+
+	'Config example contents.' => <<__EOC__,
+CKEDITOR.config.config.pasteFromWordRemoveStyle = true;
+CKEDITOR.config.coreStyles_bold = { element : 'b' };
+CKEDITOR.config.coreStyles_italic = { element : 'i' };
+__EOC__
 );
 
 1;

@@ -29,6 +29,7 @@ use vars qw( %Lexicon );
 	'Simple' => 'シンプル',
 	'Custom' => 'カスタム',
 	'Config example' => '設定例',
+	'Buttons' => '',
 
     'Default font size.' => 'デフォルトのフォントサイズ',
     'Available font sizes.' => '選択可能なフォントサイズ',
@@ -65,4 +66,13 @@ use vars qw( %Lexicon );
 	'Other setting types.', => '',
 	'OtherSettingDefault', => 'デフォルト',
 	'Configuration values.' => '設定値',
+
+	'Config example contents.' => <<__EOC__,
+// Wordから貼り付けをした際にスタイルを除去する
+CKEDITOR.config.config.pasteFromWordRemoveStyle = true;
+// 「太字」ボタンを押した際に「b」要素を設定する。
+CKEDITOR.config.coreStyles_bold = { element : 'b' };
+// 「斜体」ボタンを押した際に「i」要素を設定する。
+CKEDITOR.config.coreStyles_italic = { element : 'i' };
+__EOC__
 );
