@@ -192,14 +192,12 @@ var CKEditorObjectType = '@{[ $type ]}';
 	$lang
 })();
 </script>
-<script type="text/javascript" src="$static_url/plugins/CKEditor/config.js"></script>
 __EOH__
 		}
 		else {
 		<<__EOH__;
 <script type="text/javascript" src="$static_url/plugins/CKEditor/ckeditor/ckeditor.js"></script>
 $defaults
-<script type="text/javascript" src="$static_url/plugins/CKEditor/config.js"></script>
 __EOH__
 		}
 	}
