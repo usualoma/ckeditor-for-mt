@@ -124,7 +124,12 @@ __EOH__
 		($hash->{'ckeditor_config_type'} eq 'custom')
 		&& (my $v = $hash->{'ckeditor_config_value'})
 	) {
-		$other_config = $v;
+		$other_config = <<__EOC__;
+CKEDITOR.on('instanceCreated', function(__obj) {
+	var config = __obj.editor.config;
+	$v;
+});
+__EOC__
 	}
 
 	if ($app->can('user')) {

@@ -69,20 +69,20 @@ use vars qw( %Lexicon );
 
 	'Config example contents.' => <<__EOC__,
 // Wordから貼り付けをした際にスタイルを除去する
-CKEDITOR.config.config.pasteFromWordRemoveStyle = true;
+config.pasteFromWordRemoveStyle = true;
 // 「太字」ボタンを押した際に「b」要素を設定する。
-CKEDITOR.config.coreStyles_bold = { element : 'b' };
+config.coreStyles_bold = { element : 'b' };
 // 「斜体」ボタンを押した際に「i」要素を設定する。
-CKEDITOR.config.coreStyles_italic = { element : 'i' };
+config.coreStyles_italic = { element : 'i' };
 // ブログ毎に表示するボタンを変更する
 if (CKEditorBlogID == 1) {
-    CKEDITOR.config.toolbar = &#x5b;
+    config.toolbar = &#x5b;
         &#x5b;'Bold','Italic','Underline','Strike','-','Subscript','Superscript'&#x5d;
     &#x5d;;
 }
 // テーマ毎に表示するボタンを変更する
 if (CKEditorBlogThemeID = 'professional_blog') {
-    CKEDITOR.config.toolbar = &#x5b;
+    config.toolbar = &#x5b;
         &#x5b;'Bold','Italic','Underline','Strike','-','Subscript','Superscript'&#x5d;
     &#x5d;;
 }
