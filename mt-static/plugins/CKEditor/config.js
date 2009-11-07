@@ -1,27 +1,37 @@
-/*
- * Examples
-CKEDITOR.config.config.pasteFromWordRemoveStyle = true;
-CKEDITOR.config.coreStyles_bold = { element : 'b' };
-CKEDITOR.config.coreStyles_italic = { element : 'i' };
+CKEDITOR.editorConfig = function(config)
+{
+	/* For examples
 
-if (CKEditorBlogID == 1) {
-	CKEDITOR.config.toolbar = [
-		['Bold','Italic','Underline','Strike','-','Subscript','Superscript']
-	];
-}
+	config.language = 'fr';
+	config.uiColor = '#AADC6E';
+	config.pasteFromWordRemoveStyle = true;
 
-if (CKEditorBlogThemeID = 'professional_blog') {
-	CKEDITOR.config.toolbar = [
-		['Bold','Italic','Underline','Strike','-','Subscript','Superscript']
-	];
-}
+	config.coreStyles_bold = { element : 'b' };
+	config.coreStyles_italic = { element : 'i' };
 
-if (CKEditorObjectType = 'entry') {
-	// Editing entry.
-}
+	if (this.name == 'editor-content-textarea') {
+		// editor for Body and More
+	}
 
-if (CKEditorObjectType = 'page') {
-	// Editing page.
-}
+	if (CKEditorBlogID == 1) {
+		config.toolbar = [
+			['Bold','Italic','Underline','Strike','-','Subscript','Superscript']
+		];
+	}
 
- */
+	if (CKEditorBlogThemeID = 'professional_blog') {
+		config.toolbar = [
+			['Bold','Italic','Underline','Strike','-','Subscript','Superscript']
+		];
+	}
+
+	if (CKEditorObjectType = 'entry') {
+		// Editing entry.
+	}
+
+	if (CKEditorObjectType = 'page') {
+		// Editing page.
+	}
+
+	 */
+};

@@ -9,6 +9,7 @@ install: build
 		false; \
 	fi
 	mkdir -p ${DESTDIR}
+	mv config.js ${DESTDIR}/config.js
 	cp -R lib ${DESTDIR}/lib
 	cp -R template ${DESTDIR}/template
 	cp -R *.js ${DESTDIR}/
@@ -21,6 +22,8 @@ build: unpack
 	rm -fr  ckeditor_src/release
 	java -jar ckreleaser.jar ckeditor_src/ckeditor.release ckeditor_src/ ckeditor_src/release 1 package
 	ln -sf ckeditor_src/release/release ckeditor
+	rm ckeditor/config.js
+	ln -sf `pwd`/config.js ckeditor/config.js
 
 unpack: ckeditor_src/_source/core/ckeditor.js
 
