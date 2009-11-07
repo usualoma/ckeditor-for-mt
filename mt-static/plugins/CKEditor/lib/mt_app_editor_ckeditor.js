@@ -14,6 +14,21 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 		this.set_html_on_init = false;
 
 		this.ckeditorShow();
+
+		var interval = 5*1000;
+		var editor = this;
+		function callSetChanged() {
+			if (window.app) {
+				if (! editor.changed) {
+					editor.setChanged();
+					setTimeout(callSetChanged, interval);
+				}
+			}
+			else {
+				setTimeout(callSetChanged, interval);
+			}
+		}
+		setTimeout(callSetChanged, interval);
     },
 
 	ckeditorInitialized: function(func) {
@@ -37,7 +52,7 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 		setTimeout(function() {
 			CKEDITOR.replace(id, {
 				on: {
-					instanceReady : function(ev) {
+					instanceReady: function(ev) {
 						editor.ckeditor = CKEDITOR.instances[id];
 					}
 				}
