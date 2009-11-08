@@ -15,12 +15,14 @@ clean:
 
 distclean:
 	make -C mt-static/plugins/CKEditor distclean
+	rm -fr CKEditor-*
 
 dist:
 	rm -fr /tmp/${BASENAME}*
 	mkdir -p /tmp/${BASENAME}/plugins /tmp/${BASENAME}/mt-static/plugins
 	cp -pbR plugins/${NAME} /tmp/${BASENAME}/plugins/${NAME}
-	make DESTDIR=/tmp/${BASENAME}/mt-static/plugins/${NAME} -C mt-static/plugins/CKEditor
+	cp INSTALL* AUTHOR* /tmp/${BASENAME}/
+	make DESTDIR=/tmp/${BASENAME}/mt-static/plugins/${NAME} -C mt-static/plugins/CKEditor install
 	tar zcf ${BASENAME}.tgz -C /tmp ${BASENAME}
 	(cd /tmp; zip -qr ${BASENAME}.zip ${BASENAME})
 	mv /tmp/${BASENAME}.zip .

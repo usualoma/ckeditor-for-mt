@@ -9,10 +9,10 @@ install: build
 		false; \
 	fi
 	mkdir -p ${DESTDIR}
-	mv config.js ${DESTDIR}/config.js
+	cp config.js ${DESTDIR}/config.js
 	cp -R lib ${DESTDIR}/lib
 	cp -R template ${DESTDIR}/template
-	cp -R *.js ${DESTDIR}/
+	cp -R style ${DESTDIR}/style
 	mkdir ${DESTDIR}/ckeditor
 	for f in ${files}; do \
 		cp -R ckeditor/$$f ${DESTDIR}/ckeditor/$$f; \
