@@ -1,0 +1,19 @@
+CKEditor for Movable Type:
+
+Taku Amano (taku@toi-planning.net)
+GAMO, Toshihiro (gamo@it-pro.co.jp)
+CKEditor Japan (http://sourceforge.jp/projects/ckeditor/)
+
+
+CKEditor:
+
+Copyright (c) 2003-2009, CKSource - Frederico Knabben. All rights reserved.
+For licensing, http://ckeditor.com/license
+
+
+Pictograms for MobilePictogram plugin:
+
+by Six Apart Ltd is licensed under a Creative Commons.
+Permissions beyond the scope of this license may be available at http://start.typepad.jp/typecast/.
+Six Apart Ltd: http://typepad.jp/
+Creative Commons: http://creativecommons.org/licenses/by/2.1/jp/
