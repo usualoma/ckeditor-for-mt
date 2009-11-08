@@ -138,6 +138,18 @@ __EOC__
 
 		my $blog = $app->blog;
 		my $lang = $app->user->preferred_language;
+
+		my $l10n = File::Spec->catfile(
+			$static_file_path, 'plugins', 'CKEditor',
+			'lib', 'default', 'l10n', $lang . '.js'
+		);
+		if (-e $l10n) {
+			$l10n = '<script type="text/javascript" src="'.$static_url.'/plugins/CKEditor/lib/default/l10n/'.$lang.'.js"></script>';
+		}
+		else {
+			$l10n = '';
+		}
+
 		if (-e File::Spec->catfile(
 				$static_file_path, 'plugins', 'CKEditor', 'ckeditor',
 				'lang', $lang . '.js'
@@ -169,6 +181,7 @@ __EOC__
 </style>
 <script type="text/javascript" src="$static_url/plugins/CKEditor/ckeditor/ckeditor.js"></script>
 $defaults
+$l10n
 <script type="text/javascript">
 var CKEditorBlogID = @{[ $blog->id ]};
 var CKEditorBlogThemeID = '@{[ $blog->theme_id ]}';
