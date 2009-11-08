@@ -13,6 +13,7 @@ use vars qw( %Lexicon );
 	'ContentCSSURL' => 'URL',
 	'ContentCSSContent' => 'CSS',
 	'OtherSettingDefault' => 'Default',
+	'FormatSettingDefault' => 'Default',
 
     'ThemeAdvancedFontSizesExample' => 'eg. Big text=30px,Small text=small,My Text Size=.mytextsize',
     'ThemeAdvancedFontsNote' => '',
