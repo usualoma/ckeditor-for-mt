@@ -38,6 +38,11 @@ if (CKEditorObjectType = 'page') {
 	// Editing page.
 }
 __EOC__
+	'Arial/Arial, Helvetica, sans-serif;Times New Roman/Times New Roman, Times, serif;Verdana' => <<__EOC__,
+Arial/Arial, Helvetica, sans-serif
+Times New Roman/Times New Roman, Times, serif
+Verdana
+__EOC__
 );
 
 1;

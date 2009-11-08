@@ -42,7 +42,7 @@ settings:
                 ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
                 ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
                 ['Link','Unlink','Anchor'],
-                ['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
+                ['Image','Flash','Table','HorizontalRule','Smiley','MobilePictogram','SpecialChar','PageBreak'],
                 ['mt_insert_image', 'mt_insert_file'],
                 '/',
                 ['Styles','Format','Font','FontSize'],
@@ -55,15 +55,11 @@ settings:
     theme_advanced_font_sizes_default:
         Default:
     theme_advanced_font_sizes:
-        Default: 12 Pixels/12px;Big/2.3em;30 Percent More/130%;Bigger/larger;Very Small/x-small
+        Default: <__trans phrase="12 Pixels/12px;Big/2.3em;30 Percent More/130%;Bigger/larger;Very Small/x-small" />
     theme_advanced_fonts_default:
         Default:
     theme_advanced_fonts:
-        Default: |
-            Arial/Arial, Helvetica, sans-serif
-            Times New Roman/Times New Roman, Times, serif
-            Verdana
-
+        Default: <__trans phrase="Arial/Arial, Helvetica, sans-serif;Times New Roman/Times New Roman, Times, serif;Verdana" />
     theme_advanced_format_setting:
         Default: default
     theme_advanced_format_types:
