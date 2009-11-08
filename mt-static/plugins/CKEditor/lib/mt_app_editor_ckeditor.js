@@ -92,16 +92,6 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 			return;
 		}
 
-		if (this.set_html_on_init) {
-			if (key && key == 'onSetContent') {
-				if (this.ckeditor) {
-					this.ckeditor.resetDirty();
-				}
-				this.set_html_on_init = false;
-			}
-			return;
-		}
-
 		this.ckeditorInitialized(function() {
 			if (! this.ckeditor.checkDirty()) {
 				return;
@@ -142,6 +132,13 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 			}
 			*/
 			this.ckeditor.setData(value);
+			if (! this.textarea_initialized) {
+				var editor = this;
+				setTimeout(function() {
+					editor.ckeditor.resetDirty();
+					editor.textarea_initialized = true;
+				}, 500);
+			}
 		});
     },
 
