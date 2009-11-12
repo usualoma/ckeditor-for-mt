@@ -15,6 +15,11 @@ doc_link: http://tec.toi-planning.net/mt/ckeditor/manual
 #Localization
 l10n_class: CKEditor::L10N
 
+# objects
+schema_version: 0.1
+object_types:
+    ckeditor_field: CKEditor::Field
+
 init_request: CKEditor::App::init_request
 
 system_config_template: ckeditor_system_config.tmpl
@@ -116,7 +121,7 @@ tags:
 
 callbacks:
     MT::App::CMS::template_param.edit_entry: CKEditor::App::param_edit_entry
-    MT::App::CMS::template_source.edit_entry: CKEditor::App::source_edit_entry
+    MT::Entry::post_save: CKEditor::App::entry_post_save
     MT::PluginData::post_save: CKEditor::App::plugin_data_post_save
 
 richtext_editors:

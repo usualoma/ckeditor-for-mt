@@ -49,14 +49,20 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 	ckeditorShow: function() {
 		var id = 'editor-content-textarea';
 		var editor = this;
-		setTimeout(function() {
-			CKEDITOR.replace(id, {
-				on: {
-					instanceReady: function(ev) {
-						editor.ckeditor = CKEDITOR.instances[id];
-					}
+		var opt = {
+			on: {
+				instanceReady: function(ev) {
+					editor.ckeditor = CKEDITOR.instances[id];
 				}
-			});
+			}
+		};
+		jQuery('#ckeditor_editor-content-textarea_height').each(function() {
+			if (this.value && this.value > 0) {
+				opt['height'] = this.value;
+			}
+		});
+		setTimeout(function() {
+			CKEDITOR.replace(id, opt);
 		}, 0);
 	},
 

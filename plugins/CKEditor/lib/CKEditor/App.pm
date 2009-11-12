@@ -4,6 +4,7 @@
 package CKEditor::App;
 use strict;
 use File::Basename;
+use CKEditor::Field;
 
 sub plugin_data_post_save {
 	my ($cb, $obj, $original) = @_;
@@ -208,6 +209,17 @@ var CKEditorObjectType = '@{[ $type ]}';
 	$css_settings
 	$other_config
 	$lang
+
+	CKEDITOR.config.resize_event = true;
+	CKEDITOR.on('instanceCreated', function(__obj) {
+		var editor = __obj.editor;
+		editor.on('resizeComplete', function() {
+			container = editor.getResizable();
+			jQuery('#ckeditor_' + editor.name + '_height').val(
+				container.\$.offsetHeight
+			);
+		});
+	});
 })();
 </script>
 __EOH__
@@ -223,16 +235,13 @@ __EOH__
 
 sub param_edit_entry {
 	my ($cb, $app, $param, $tmpl) = @_;
+	my $plugin = MT->component('CKEditor');
+	my $blog = $app->blog or return;
+	my $blog_id = $blog->id;
+	my @ids = ();
 
 	$param->{'js_include'} ||= '';
 	$param->{'js_include'} .= &js_include;
-}
-
-sub source_edit_entry {
-	my ($cb, $app, $tmpl) = @_;
-	my $plugin = MT->component('CKEditor');
-	my $blog_id = $app->param('blog_id') or return;
-	my @ids = ();
 
 	my $system_hash = $plugin->get_config_hash() || {};
 	my $hash = $plugin->get_config_hash('blog:' . $blog_id) || {};
@@ -296,18 +305,97 @@ sub source_edit_entry {
 
 	var ids = [$ids];
 	for (var i = 0; i < ids.length; i++) {
-		CKEDITOR.replace(ids[i]);
+		var id = 'editor-content-textarea';
+		var opt = { };
+		jQuery('#ckeditor_' + ids[i] + '_height').each(function() {
+			if (this.value && this.value > 0) {
+				opt['height'] = this.value;
+			}
+		});
+
+		CKEDITOR.replace(ids[i], opt);
 	}
 })();
 </script>
 __EOH__
-
-		#$$tmpl .= $script;
-		my $replace = '<mt:?include[^>]*name="include/footer.tmpl"[^>]*>';
-		$$tmpl =~ s#$replace#$script$&#i;
+		my $footer = $tmpl->getElementById('footer_include');
+		my $node = $tmpl->createTextNode($script);
+		$tmpl->insertBefore($node, $footer);
 	}
 
+	my @fields = CKEditor::Field->load(
+		{ 'blog_id' => $blog_id },
+		{ sort => [
+			{ column => 'entry_id', desc => 'desc' },
+			{ column => 'author_id', desc => 'desc' },
+		] }
+	);
+	my %fields;
+	$fields{$_->field} ||= $_ for @fields;
+
+	my $heights = join('', map({
+		my $id = 'ckeditor_'.$_.'_height';
+		my $value = $fields{$_} ? $fields{$_}->height : '';
+		<<__EOI__
+<input type="hidden" id="$id" name="$id" value="$value" />
+__EOI__
+	} @ids, 'editor-content-textarea'));
+
+	{
+		my $field = $tmpl->getElementById('content_fields');
+		my $node = $tmpl->createTextNode($heights);
+		$tmpl->insertAfter($node, $field);
+	}
 }
+
+sub entry_post_save {
+	my ($cb, $obj, $original) = @_;
+	my $plugin = MT->component('CKEditor');
+	my $app = MT->instance;
+	my $blog = $app->blog
+		or return;
+	my $user = $app->user
+		or return;
+	my $blog_id = $blog->id;
+
+	return if ! $app->can('param');
+
+	my $vars = $app->param->Vars;
+
+	my @fields = CKEditor::Field->load(
+		{ 'blog_id' => $blog_id },
+		{ sort => [
+			{ column => 'entry_id', desc => 'desc' },
+			{ column => 'author_id', desc => 'desc' },
+		] }
+	);
+	my %fields;
+	$fields{$_->entry_id}{$_->author_id}{$_->field} = $_ for @fields;
+
+	foreach my $k (%$vars) {
+		next unless $vars->{$k};
+		if ($k =~ m/^ckeditor_(.*)_height$/) {
+			my $v = $vars->{$k};
+			foreach my $k (
+				[$obj->id, $user->id],
+				[0, $user->id],
+				[0, 0]
+			) {
+				my ($k1, $k2) = @$k;
+				$fields{$k1}{$k2}{$1} ||= new CKEditor::Field;
+				$fields{$k1}{$k2}{$1}->set_values({
+					'blog_id' => $blog_id,
+					'entry_id' => $k1,
+					'author_id' => $k2,
+					'field' => $1,
+					'height' => $v,
+				});
+				$fields{$k1}{$k2}{$1}->save;
+			}
+		}
+	}
+}
+
 
 sub init_request {
 	my ($app) = @_;
