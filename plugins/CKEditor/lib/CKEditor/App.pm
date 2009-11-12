@@ -109,7 +109,7 @@ __EOH__
 	my $css_settings = '';
 	if ($hash->{'theme_content_css_type'} eq 'url') {
 		$css_settings = <<__EOH__;
-config.contentsCss = '@{[ $hash->{'theme_content_css_url'} ]}';
+CKEDITOR.config.contentsCss = '@{[ $hash->{'theme_content_css_url'} ]}';
 __EOH__
 	}
 	elsif ($hash->{'theme_content_css_type'} eq 'content') {
