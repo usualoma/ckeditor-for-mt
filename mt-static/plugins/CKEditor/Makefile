@@ -32,7 +32,7 @@ ckeditor_src/_source/core/ckeditor.js:
 	for f in *.tar.gz; do \
 		tar zxf $$f; \
 	done
-	for f in *.patch.gz; do \
+	for f in *patch.gz; do \
 		zcat $$f | (cd ckeditor; patch -p1) \
 	done
 	mv ckeditor ckeditor_src
