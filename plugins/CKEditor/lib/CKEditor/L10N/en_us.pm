@@ -22,6 +22,8 @@ use vars qw( %Lexicon );
 config.pasteFromWordRemoveStyle = true;
 config.coreStyles_bold = { element : 'b' };
 config.coreStyles_italic = { element : 'i' };
+// "href" and "src" are converted into the relative path. 
+config.rewrite_urls = true;
 if (CKEditorBlogID == 1) {
     config.toolbar = &#x5b;
         &#x5b;'Bold','Italic','Underline','Strike','-','Subscript','Superscript'&#x5d;
