@@ -1,0 +1,135 @@
+# Copyright (c) 2009 ToI-Planning <office@toi-planning.net> All rights reserved.
+# For licensing, see LICENSE-Plugin.html
+
+#plugin name
+name: CKEditor for Movable Type
+version: 1.01
+
+#about this plugin
+description: <__trans phrase="Enable to edit field by CKEditor">
+author_name: <__trans phrase="toi-planning">
+author_link: http://tec.toi-planning.net/
+plugin_link: http://tec.toi-planning.net/mt/ckeditor/
+doc_link: http://tec.toi-planning.net/mt/ckeditor/manual
+
+#Localization
+l10n_class: CKEditor::L10N
+
+# objects
+schema_version: 0.1
+object_types:
+    ckeditor_field: CKEditor::Field
+
+init_request: CKEditor::App::init_request
+
+system_config_template: ckeditor_system_config.tmpl
+blog_config_template: ckeditor_blog_config.tmpl
+
+settings:
+    ckeditor_for_body:
+        Default: 1
+    ckeditor_for_excerpt:
+        Default: 0
+    ckeditor_fields:
+        Default:
+
+    theme_advanced_buttons_set:
+        Default: normal
+    theme_advanced_buttons:
+        Default: |
+            [
+                ['Source','-','Save','NewPage','Preview','-','Templates'],
+                ['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print', 'SpellChecker', 'Scayt'],
+                ['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
+                ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField'],
+                '/',
+                ['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
+                ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
+                ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+                ['Link','Unlink','Anchor'],
+                ['Image','Flash','Table','HorizontalRule','Smiley','MobilePictogram','SpecialChar','PageBreak'],
+                ['mt_insert_image', 'mt_insert_file'],
+                '/',
+                ['Styles','Format','Font','FontSize'],
+                ['TextColor','BGColor'],
+                ['Maximize', 'ShowBlocks','-','About']
+            ]
+
+    theme_advanced_font_setting:
+        Default: default
+    theme_advanced_font_sizes_default:
+        Default:
+    theme_advanced_font_sizes:
+        Default: <__trans phrase="12 Pixels/12px;Big/2.3em;30 Percent More/130%;Bigger/larger;Very Small/x-small" />
+    theme_advanced_fonts_default:
+        Default:
+    theme_advanced_fonts:
+        Default: <__trans phrase="Arial/Arial, Helvetica, sans-serif;Times New Roman/Times New Roman, Times, serif;Verdana" />
+    theme_advanced_format_setting:
+        Default: default
+    theme_advanced_format_types:
+        Default: p;h1;h2;h3;h4;h5;h6;pre;address;div
+
+    theme_content_css_type:
+        Default: default
+    theme_content_css_url:
+        Default: http://
+    theme_content_css_content:
+        Default: |
+            /*
+            Copyright (c) 2003-2009, CKSource - Frederico Knabben. All rights reserved.
+            For licensing, see http://ckeditor.com/license
+            */
+            body
+            {
+                /* Font */
+                font-family: Arial, Verdana, sans-serif;
+                font-size: 12px;
+                /* Text color */
+                color: #222;
+                /* Remove the background color to make it transparent */
+                background-color: #fff;
+            }
+            html
+            {
+                /* #3658: [IE6] Editor document has horizontal scrollbar on long lines
+                To prevent this misbehavior, we show the scrollbar always */
+                _overflow-y: scroll
+            }
+            img:-moz-broken
+            {
+                -moz-force-broken-image-icon : 1;
+                width : 24px;
+                height : 24px;
+            }
+            img, input, textarea
+            {
+                cursor: default;
+            }
+
+    ckeditor_config_type:
+        Default: default
+
+    ckeditor_config_value:
+        Default:
+
+tags:
+    function:
+        CKEditorIncludeCustomizedFields: CKEditor::Template::ContextHandlers::_hdlr_include_customized_fields
+        CKEditorJavaScript: CKEditor::Template::ContextHandlers::_hdlr_javascript
+        
+
+callbacks:
+    MT::App::CMS::template_param.edit_entry: CKEditor::App::param_edit_entry
+    MT::Entry::post_save: CKEditor::App::entry_post_save
+    MT::PluginData::post_save: CKEditor::App::plugin_data_post_save
+
+richtext_editors:
+    ckeditor:
+        label: CKEditor
+        template: ckeditor.tmpl
+
+applications:
+    cms:
+        methods:
+           ckeditor_content_css: CKEditor::App::content_css

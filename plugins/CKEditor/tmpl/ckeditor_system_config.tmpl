@@ -1,0 +1,460 @@
+<script type="text/javascript">
+function CKEditorShowPrefs(id, state) {
+	var details = document.getElementById(id);
+	if (state) {
+		details.style.display = '';
+	}
+	else {
+		details.style.display = 'none';
+	}
+}
+function CKEditorInitSelect(id, value) {
+	var opts = document.getElementById(id).options;
+	for (var i = 0; i < opts.length; i++) {
+		if (opts[i].value == value) {
+			opts[i].selected = 'selected';
+		}
+	}
+}
+</script>
+
+<input type="hidden" name="ckeditor_blog_config_beacon" value="1"/>
+
+<p style="border-bottom: 1px solid #ccc;">
+<__trans phrase="Setting for editor&#039;s button.">
+</p>
+
+<style type="text/css">
+.ckeditor_settings textarea{
+    width: 100%;
+    height: 20em;
+}
+</style>
+<div class="ckeditor_settings">
+
+<mtapp:setting
+	id="theme_advanced_buttons_set"
+	label="<__trans phrase="Buttons set.">"
+>
+<select
+	name="theme_advanced_buttons_set" id="theme_advanced_buttons_set"
+	onchange="CKEditorShowPrefs(this.id + '-prefs', this.value == 'custom')"
+>
+<option value="full"><__trans phrase="Full"></option>
+<option value="normal"><__trans phrase="Normal"></option>
+<option value="table"><__trans phrase="Table"></option>
+<option value="simple"><__trans phrase="Simple"></option>
+<option value="custom"><__trans phrase="Custom"></option>
+</select>
+<script type="text/javascript">
+CKEditorInitSelect(
+    'theme_advanced_buttons_set', '<mt:var name="theme_advanced_buttons_set">'
+);
+</script>
+</mtapp:setting>
+
+<div id="theme_advanced_buttons_set-prefs" style="display: <mt:if name="theme_advanced_buttons_set" eq="custom">block<mt:else>none</mt:if>;">
+
+<mtapp:setting
+	id="theme_advanced_buttons_detail"
+	label="<__trans phrase="Reference">"
+>
+
+<ul><li>
+<a href="http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Toolbar" target="_blank">http://docs.cksource.com/CKEditor_3.x/Developers_Guide/Toolbar</a>
+</li></ul>
+
+</mtapp:setting>
+
+<mtapp:setting
+	id="theme_advanced_buttons"
+	label="<__trans phrase="Buttons">"
+>
+
+<ul><li>
+<textarea name="theme_advanced_buttons" id="theme_advanced_buttons"><mt:var name="theme_advanced_buttons" encode_html="1"></textarea>
+</li></ul>
+
+</mtapp:setting>
+
+</div>
+
+</div>
+
+
+<p style="border-bottom: 1px solid #ccc;">
+<__trans phrase="Setting for fonts.">
+</p>
+
+<style type="text/css">
+.ckeditor_font_settings textarea {
+    width: 100%;
+    height: 10em;
+}
+</style>
+<div class="ckeditor_font_settings">
+
+<mtapp:setting
+	id="theme_advanced_font_setting"
+	label="<__trans phrase="Font settings.">"
+>
+<select
+	name="theme_advanced_font_setting" id="theme_advanced_font_setting"
+	onchange="CKEditorShowPrefs(this.id + '-prefs', this.value == 'custom')"
+>
+<option value="default"><__trans phrase="FontSettingDefault"></option>
+<option value="custom"><__trans phrase="Custom"></option>
+</select>
+<script type="text/javascript">
+CKEditorInitSelect(
+    'theme_advanced_font_setting', '<mt:var name="theme_advanced_font_setting">'
+);
+</script>
+</mtapp:setting>
+
+<div id="theme_advanced_font_setting-prefs" style="display: <mt:if name="theme_advanced_font_setting" eq="custom">block<mt:else>none</mt:if>;">
+
+<mtapp:setting
+	id="theme_advanced_font_detail"
+	label="<__trans phrase="Reference">"
+>
+
+<ul><li>
+<a href="http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html#.fontSize_sizes" target="_blank">http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html#.fontSize_sizes</a>
+</li>
+<li>
+<a href="http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html#.font_names" target="_blank">http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html#.font_names</a>
+</li>
+</ul>
+
+</mtapp:setting>
+
+<mt:Ignore>
+<mtapp:setting
+	id="theme_advanced_font_sizes_default"
+	label="<__trans phrase="Default font size.">"
+>
+
+<ul>
+<li><input name="theme_advanced_font_sizes_default" id="theme_advanced_font_sizes_default" value="<mt:var name="theme_advanced_font_sizes_default">" style="width: 100%;"/></li>
+</ul>
+
+</mtapp:setting>
+</mt:Ignore>
+
+<mtapp:setting
+	id="theme_advanced_font_sizes"
+	label="<__trans phrase="Available font sizes.">"
+>
+
+<ul>
+<li><input name="theme_advanced_font_sizes" id="theme_advanced_font_sizes" value="<mt:var name="theme_advanced_font_sizes">" style="width: 100%;"/></li>
+<li><__trans phrase="ThemeAdvancedFontSizesExample"></li>
+</ul>
+
+</mtapp:setting>
+
+<mt:Ignore>
+<mtapp:setting
+	id="theme_advanced_fonts_default"
+	label="<__trans phrase="Default font.">"
+>
+
+<ul>
+<li><input name="theme_advanced_fonts_default" id="theme_advanced_fonts_default" value="<mt:var name="theme_advanced_fonts_default">" style="width: 100%;"/></li>
+</ul>
+
+</mtapp:setting>
+</mt:Ignore>
+
+<mtapp:setting
+	id="theme_advanced_fonts"
+	label="<__trans phrase="Available fonts.">"
+>
+
+<ul><li><textarea name="theme_advanced_fonts" id="theme_advanced_fonts"><mt:var name="theme_advanced_fonts" /></textarea></li>
+<li><__trans phrase="ThemeAdvancedFontsNote"></li>
+</ul>
+
+</mtapp:setting>
+
+</div>
+
+</div>
+
+
+<p style="border-bottom: 1px solid #ccc;">
+<__trans phrase="Setting for formats.">
+</p>
+
+<div class="ckeditor_format_settings">
+
+<mtapp:setting
+	id="theme_advanced_format_setting"
+	label="<__trans phrase="Format settings.">"
+>
+<select
+	name="theme_advanced_format_setting" id="theme_advanced_format_setting"
+	onchange="CKEditorShowPrefs(this.id + '-prefs', this.value == 'custom')"
+>
+<option value="default"><__trans phrase="FormatSettingDefault"></option>
+<option value="custom"><__trans phrase="Custom"></option>
+</select>
+<script type="text/javascript">
+CKEditorInitSelect(
+    'theme_advanced_format_setting', '<mt:var name="theme_advanced_format_setting">'
+);
+</script>
+</mtapp:setting>
+
+<div id="theme_advanced_format_setting-prefs" style="display: <mt:if name="theme_advanced_format_setting" eq="custom">block<mt:else>none</mt:if>;">
+
+<mtapp:setting
+	id="theme_advanced_format_detail"
+	label="<__trans phrase="Reference">"
+>
+
+<ul><li>
+<a href="http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html#.format_tags" target="_blank">http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html#.format_tags</a>
+</li>
+</ul>
+
+</mtapp:setting>
+
+<mtapp:setting
+	id="theme_advanced_format_types"
+	label="<__trans phrase="Available format types.">"
+>
+
+<ul>
+<li><input name="theme_advanced_format_types" id="theme_advanced_format_types" value="<mt:var name="theme_advanced_format_types">" style="width: 100%;"/></li>
+</ul>
+
+</mtapp:setting>
+
+</div>
+
+</div>
+
+
+<p style="border-bottom: 1px solid #ccc;">
+<__trans phrase="Setting for contnt.css.">
+</p>
+
+<style type="text/css">
+.ckeditor_content_settings textarea {
+    width: 100%;
+    height: 20em;
+}
+</style>
+<div class="ckeditor_content_settings">
+
+<mtapp:setting
+	id="theme_content_css_type"
+	label="<__trans phrase="content.css settings.">"
+>
+<select
+	name="theme_content_css_type" id="theme_content_css_type"
+	onchange="CKEditorShowPrefs('theme_content_setting-url', this.value == 'url'); CKEditorShowPrefs('theme_content_setting-content', this.value == 'content');"
+>
+<option value="default"><__trans phrase="ContentCSSDefault"></option>
+<option value="url"><__trans phrase="ContentCSSURL"></option>
+<option value="content"><__trans phrase="ContentCSSContent"></option>
+</select>
+<script type="text/javascript">
+CKEditorInitSelect(
+    'theme_content_css_type', '<mt:var name="theme_content_css_type">'
+);
+</script>
+</mtapp:setting>
+
+<div id="theme_content_setting-url" style="display: <mt:if name="theme_content_css_type" eq="url">block<mt:else>none</mt:if>;">
+
+<mtapp:setting
+	id="theme_content_css_detail"
+	label="<__trans phrase="Reference">"
+>
+
+<ul><li>
+<a href="http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html#.contentsCss" target="_blank">http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html#.contentsCss</a>
+</li></ul>
+
+</mtapp:setting>
+
+<mtapp:setting
+	id="theme_content_css_url"
+	label="<__trans phrase="Url of &#034;content.css&#034;">"
+>
+
+<ul><li>
+<input name="theme_content_css_url" id="theme_content_css_url" value="<mt:var name="theme_content_css_url">" style="width: 100%;"/>
+</li></ul>
+
+</mtapp:setting>
+
+</div>
+
+<div id="theme_content_setting-content" style="display: <mt:if name="theme_content_css_type" eq="content">block<mt:else>none</mt:if>;">
+
+<mtapp:setting
+	id="theme_content_css_detail"
+	label="<__trans phrase="Reference">"
+>
+
+<ul><li>
+<a href="http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html#.contentsCss" target="_blank">http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html#.contentsCss</a>
+</li></ul>
+
+</mtapp:setting>
+
+<mtapp:setting
+	id="theme_content_css_content"
+	label="<__trans phrase="Contents of content.css">"
+>
+
+<ul><li>
+<textarea name="theme_content_css_content" id="theme_content_css_content"><mt:var name="theme_content_css_content" encode_html="1"></textarea>
+</li></ul>
+
+</mtapp:setting>
+
+
+</div>
+
+</div>
+
+
+<p style="border-bottom: 1px solid #ccc;">
+<__trans phrase="Other settings.">
+</p>
+
+<style type="text/css">
+.ckeditor_other_settings textarea {
+    width: 100%;
+    height: 20em;
+}
+</style>
+<div class="ckeditor_other_settings">
+
+<mtapp:setting
+	id="ckeditor_config_type"
+	label="<__trans phrase="Other setting types.">"
+>
+<select
+	name="ckeditor_config_type" id="ckeditor_config_type"
+	onchange="CKEditorShowPrefs(this.id + '-prefs', this.value == 'custom')"
+>
+<option value="default"><__trans phrase="OtherSettingDefault"></option>
+<option value="custom"><__trans phrase="Custom"></option>
+</select>
+<script type="text/javascript">
+CKEditorInitSelect(
+    'ckeditor_config_type', '<mt:var name="ckeditor_config_type">'
+);
+</script>
+</mtapp:setting>
+
+<div id="ckeditor_config_type-prefs" style="display: <mt:if name="ckeditor_config_type" eq="custom">block<mt:else>none</mt:if>;">
+
+<mtapp:setting
+	id="ckeditor_config_detail"
+	label="<__trans phrase="Reference">"
+>
+
+<ul>
+<li>
+<a href="http://docs.cksource.com/CKEditor_3.x/Developers_Guide" target="_blank">http://docs.cksource.com/CKEditor_3.x/Developers_Guide</a>
+</li>
+<li>
+<a href="http://docs.cksource.com/ckeditor_api/" target="_blank">http://docs.cksource.com/ckeditor_api/</a>
+</li>
+</ul>
+
+</mtapp:setting>
+
+<mtapp:setting
+	id="ckeditor_config_value"
+	label="<__trans phrase="Configuration values.">"
+>
+
+<ul><li><textarea name="ckeditor_config_value" id="ckeditor_config_value"><mt:var name="ckeditor_config_value" encode_html="1"></textarea></li>
+</ul>
+
+</mtapp:setting>
+
+<mtapp:setting
+	id="ckeditor_config_value_example"
+	label="<__trans phrase="Config example">"
+>
+
+<ul>
+<li><pre>
+<__trans phrase="Config example contents." />
+</pre></li>
+</ul>
+
+</mtapp:setting>
+
+</div>
+
+</div>
+
+<MTCKEditorIncludeCustomizedFields>
+<mt:if name="ckeditor_has_customized_fields">
+
+<p style="border-bottom: 1px solid #ccc;">
+<__trans phrase="Setting for fields which edited by CKEditor.">
+</p>
+
+<mt:if name="ckeditor_customized_fields">
+<mtapp:setting
+	id="ckeditor_customized_fields"
+	label="<__trans phrase="CustomFields"><br />(<__trans phrase="Entry">)"
+>
+
+<ul>
+<MTLoop name="ckeditor_customized_fields" sort_by="key numeric">
+<li>
+<input type="checkbox" id="ckeditor_fields_<mt:var name="__value__{key}">" name="ckeditor_field_ids" value="<mt:var name="__value__{key}">" />: <mt:var name="__value__{name}">
+<script type="text/javascript">
+(function () {
+var input = getByID('ckeditor_fields_<mt:var name="__value__{key}">');
+<mt:if name="__value__{checked}">
+input.checked = 'checked';
+</mt:if>
+})();
+</script>
+</li>
+</MTLoop>
+</ul>
+
+</mtapp:setting>
+</mt:if>
+
+
+<mt:if name="ckeditor_customized_fields_page">
+<mtapp:setting
+	id="ckeditor_customized_fields_page"
+	label="<__trans phrase="CustomFields"><br />(<__trans phrase="Page">)"
+>
+
+<ul>
+<MTLoop name="ckeditor_customized_fields_page" sort_by="key numeric">
+<li>
+<input type="checkbox" id="ckeditor_fields_<mt:var name="__value__{key}">" name="ckeditor_field_ids" value="<mt:var name="__value__{key}">" />: <mt:var name="__value__{name}">
+<script type="text/javascript">
+(function () {
+var input = getByID('ckeditor_fields_<mt:var name="__value__{key}">');
+<mt:if name="__value__{checked}">
+input.checked = 'checked';
+</mt:if>
+})();
+</script>
+</li>
+</MTLoop>
+</ul>
+
+</mtapp:setting>
+</mt:if>
+
+</mt:if>
