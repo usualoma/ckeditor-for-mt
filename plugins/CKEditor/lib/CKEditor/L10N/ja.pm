@@ -74,8 +74,15 @@ config.pasteFromWordRemoveStyle = true;
 config.coreStyles_bold = { element : 'b' };
 // 「斜体」ボタンを押した際に「i」要素を設定する。
 config.coreStyles_italic = { element : 'i' };
+
+// Enterを押した場合に<br />を挿入する
+config.enterMode = CKEDITOR.ENTER_BR;
+// Shift+Enterを押した場合に<p>を作成する
+config.shiftEnterMode = CKEDITOR.ENTER_P;
+
 // 「href」や「src」を相対パスに変換する。
 config.rewrite_urls = true;
+
 // ブログ毎に表示するボタンを変更する
 if (CKEditorBlogID == 1) {
     config.toolbar = &#x5b;
