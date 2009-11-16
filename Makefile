@@ -29,13 +29,13 @@ dist:
 	mv /tmp/${BASENAME}.zip .
 
 release:
-	git clone git@github.com:usualoma/ckeditor-for-mt.git
-	rm -fr ckeditor-for-mt/*
 	for f in CKEditor-*.tgz; do \
-		tar zxf $$f; \
+		tar zxf $$f || exit; \
+		git clone git@github.com:usualoma/ckeditor-for-mt.git; \
+		rm -fr ckeditor-for-mt/*; \
 		mv `echo $$f | sed 's/\.tgz//'`/* ckeditor-for-mt/; \
 		cd ckeditor-for-mt/; \
 		git reset --hard download; \
 		git add .; \
-		git commit -m '`echo $f | sed "s/.*-//;s/\.tgz/"`'; \
+		git commit -m 'Release `echo $f | sed "s/.*-//;s/\.tgz/"`'; \
 	done
