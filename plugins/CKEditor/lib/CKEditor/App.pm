@@ -352,13 +352,14 @@ sub entry_post_save {
 	my ($cb, $obj, $original) = @_;
 	my $plugin = MT->component('CKEditor');
 	my $app = MT->instance;
+
+	return if ! $app->can('param');
+
 	my $blog = $app->blog
 		or return;
 	my $user = $app->user
 		or return;
 	my $blog_id = $blog->id;
-
-	return if ! $app->can('param');
 
 	my $vars = $app->param->Vars;
 
