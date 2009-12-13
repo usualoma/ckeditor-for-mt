@@ -92,8 +92,10 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
     /* Clear the dirty flag on the editor ( dirty == modified ) */
     clearDirty: function() {
 		this.ckeditorInitialized(function() {
-			this.ckeditor.resetDirty();
-			this.changed = false;
+			if (CKEDITOR.instances[this.ckeditor.name]) {
+				this.ckeditor.resetDirty();
+				this.changed = false;
+			}
 		});
     },
 
