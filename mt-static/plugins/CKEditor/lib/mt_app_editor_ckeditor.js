@@ -17,6 +17,11 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 
 		var interval = 5*1000;
 		var editor = this;
+
+		editor.initial_contents = document.getElementById(
+			'editor-input-content'
+		).value;
+
 		function callSetChanged() {
 			if (window.app) {
 				if (! editor.changed) {
@@ -77,6 +82,10 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 			//this.ckeditor.hide();
 			//this.ckeditor.getElement().value = this.initial_contents;
 			this.ckeditor.destroy();
+
+			document.getElementById(
+				'editor-content-textarea'
+			).value = this.initial_contents;
 		});
 	},
 
@@ -224,6 +233,7 @@ MT.App = new Class( MT.App, {
 			enclosure.style.height = enclosure.save_height || '250px';
 
 			if (this.editor.iframe) {
+				// When it is preserved without the format
 				if (! this.last_mode) {
 					this.editor.iframe.ckeditorHideAndSetInitial();
 				}
