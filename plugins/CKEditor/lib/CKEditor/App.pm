@@ -306,7 +306,13 @@ sub param_edit_entry {
 	var ids = [$ids];
 	for (var i = 0; i < ids.length; i++) {
 		var id = 'editor-content-textarea';
-		var opt = { };
+	 	var opt = {
+			on: {
+				key: function(ev) {
+					window.app.setDirty();
+				}
+			}
+		};
 		jQuery('#ckeditor_' + ids[i] + '_height').each(function() {
 			if (this.value && this.value > 0) {
 				opt['height'] = this.value;

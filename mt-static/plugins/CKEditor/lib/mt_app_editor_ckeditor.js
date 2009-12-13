@@ -21,19 +21,6 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 		editor.initial_contents = document.getElementById(
 			'editor-input-content'
 		).value;
-
-		function callSetChanged() {
-			if (window.app) {
-				if (! editor.changed) {
-					editor.setChanged();
-					setTimeout(callSetChanged, interval);
-				}
-			}
-			else {
-				setTimeout(callSetChanged, interval);
-			}
-		}
-		setTimeout(callSetChanged, interval);
     },
 
 	ckeditorInitialized: function(func) {
@@ -58,6 +45,9 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 			on: {
 				instanceReady: function(ev) {
 					editor.ckeditor = CKEDITOR.instances[id];
+				},
+				key: function(ev) {
+					editor.setChanged();
 				}
 			}
 		};
@@ -101,24 +91,8 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 
     /* Called to set the dirty bit on the editor and call */
     setChanged: function(key) {
-		if (
-			window.app
-			&& window.app.eventSubmitForm
-			&& window.app.eventSubmitForm.submitted
-		) {
-			return;
-		}
-
-		this.ckeditorInitialized(function() {
-			if (! this.ckeditor.checkDirty()) {
-				return;
-			}
-
-			this.changed = true;
-			if (window.app) {
-				this.parent.setChanged();
-			}
-		});
+		this.changed = true;
+		this.parent.setChanged();
     },
 
     /* Focus the editor, forcing the cursor into the textarea or iframe */
@@ -246,6 +220,17 @@ MT.App = new Class( MT.App, {
         }
 
 		this.last_mode = mode;
+	},
+
+	autoSave: function() {
+		for (k in CKEDITOR.instances) {
+			if (k == 'editor-content-textarea') {
+				continue;
+			}
+			CKEDITOR.instances[k].updateElement();
+		}
+
+        return arguments.callee.applySuper(this, arguments);
 	},
 
     /* Called to set the editor to non rich text mode */
