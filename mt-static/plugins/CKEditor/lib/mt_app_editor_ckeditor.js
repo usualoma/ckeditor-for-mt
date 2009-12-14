@@ -17,18 +17,10 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 
 		var interval = 5*1000;
 		var editor = this;
-		function callSetChanged() {
-			if (window.app) {
-				if (! editor.changed) {
-					editor.setChanged();
-					setTimeout(callSetChanged, interval);
-				}
-			}
-			else {
-				setTimeout(callSetChanged, interval);
-			}
-		}
-		setTimeout(callSetChanged, interval);
+
+		editor.initial_contents = document.getElementById(
+			'editor-input-content'
+		).value;
     },
 
 	ckeditorInitialized: function(func) {
@@ -53,6 +45,9 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 			on: {
 				instanceReady: function(ev) {
 					editor.ckeditor = CKEDITOR.instances[id];
+				},
+				key: function(ev) {
+					editor.setChanged();
 				}
 			}
 		};
@@ -77,37 +72,27 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 			//this.ckeditor.hide();
 			//this.ckeditor.getElement().value = this.initial_contents;
 			this.ckeditor.destroy();
+
+			document.getElementById(
+				'editor-content-textarea'
+			).value = this.initial_contents;
 		});
 	},
 
     /* Clear the dirty flag on the editor ( dirty == modified ) */
     clearDirty: function() {
 		this.ckeditorInitialized(function() {
-			this.ckeditor.resetDirty();
-			this.changed = false;
+			if (CKEDITOR.instances[this.ckeditor.name]) {
+				this.ckeditor.resetDirty();
+				this.changed = false;
+			}
 		});
     },
 
     /* Called to set the dirty bit on the editor and call */
     setChanged: function(key) {
-		if (
-			window.app
-			&& window.app.eventSubmitForm
-			&& window.app.eventSubmitForm.submitted
-		) {
-			return;
-		}
-
-		this.ckeditorInitialized(function() {
-			if (! this.ckeditor.checkDirty()) {
-				return;
-			}
-
-			this.changed = true;
-			if (window.app) {
-				this.parent.setChanged();
-			}
-		});
+		this.changed = true;
+		this.parent.setChanged();
     },
 
     /* Focus the editor, forcing the cursor into the textarea or iframe */
@@ -224,6 +209,7 @@ MT.App = new Class( MT.App, {
 			enclosure.style.height = enclosure.save_height || '250px';
 
 			if (this.editor.iframe) {
+				// When it is preserved without the format
 				if (! this.last_mode) {
 					this.editor.iframe.ckeditorHideAndSetInitial();
 				}
@@ -234,6 +220,17 @@ MT.App = new Class( MT.App, {
         }
 
 		this.last_mode = mode;
+	},
+
+	autoSave: function() {
+		for (k in CKEDITOR.instances) {
+			if (k == 'editor-content-textarea') {
+				continue;
+			}
+			CKEDITOR.instances[k].updateElement();
+		}
+
+        return arguments.callee.applySuper(this, arguments);
 	},
 
     /* Called to set the editor to non rich text mode */
