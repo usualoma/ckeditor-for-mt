@@ -196,7 +196,7 @@ MT.App = new Class( MT.App, {
 			enclosure.style.borderWidth = '0px';
 			enclosure.style.height = 'auto';
 
-			if (this.editor.iframe) {
+			if (this.last_mode && this.editor.iframe) {
 				this.editor.iframe.ckeditorShow();
 			}
 		}
