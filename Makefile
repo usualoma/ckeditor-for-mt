@@ -35,7 +35,7 @@ release:
 		rm -fr ckeditor-for-mt/*; \
 		mv `echo $$f | sed 's/\.tgz//'`/* ckeditor-for-mt/; \
 		cd ckeditor-for-mt/; \
-		git reset --hard download; \
+		git checkout -b commit_download origin/download; \
 		git add .; \
-		git commit -m 'Release `echo $f | sed "s/.*-//;s/\.tgz/"`'; \
+		git commit -m "Release `echo $$f | sed 's/.*-//;s/\.tgz//'`."; \
 	done
