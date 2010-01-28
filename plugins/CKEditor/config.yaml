@@ -3,7 +3,7 @@
 
 #plugin name
 name: CKEditor for Movable Type
-version: 1.021
+version: 1.03
 
 #about this plugin
 description: <__trans phrase="Enable to edit field by CKEditor">
