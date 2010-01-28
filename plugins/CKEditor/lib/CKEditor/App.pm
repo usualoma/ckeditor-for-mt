@@ -71,16 +71,16 @@ sub js_include {
 	my $buttons = '';
 	if ($hash->{'theme_advanced_buttons_set'} eq 'custom') {
 		$buttons .= <<__EOB__;
-CKEDITOR.config.toolbar_MTCustom = @{[ $hash->{'theme_advanced_buttons'} ]};
+config.toolbar_MTCustom = @{[ $hash->{'theme_advanced_buttons'} ]};
 __EOB__
 	}
 	$buttons .=
-		"CKEDITOR.config.toolbar = 'MT"
+		"config.toolbar = 'MT"
 		. ucfirst($hash->{'theme_advanced_buttons_set'})
 		. "';";
 
 	my $plugins =
-		"CKEDITOR.config.plugins = '"
+		"config.plugins = '"
 		. join(',', &ckeditor_plugins($static_file_path))
 		. "';";
 	my $defaults = join('', map({
@@ -94,29 +94,27 @@ __EOS__
         my $fonts = $hash->{'theme_advanced_fonts'};
         $fonts = join(';', grep(!/^\s*$/, split(/;?\s*(\n|\r)/, $fonts)));
 		$font_settings = <<__EOH__;
-//CKEDITOR.config.fontSize_defaultLabel = '@{[ $hash->{'theme_advanced_font_sizes_default'} ]}';
-//CKEDITOR.config.font_defaultLabel = '@{[ $hash->{'theme_advanced_font_sizes_default'} ]}';
-CKEDITOR.config.fontSize_sizes = '@{[ $hash->{'theme_advanced_font_sizes'} ]}';
-CKEDITOR.config.font_names = '$fonts';
+config.fontSize_sizes = '@{[ $hash->{'theme_advanced_font_sizes'} ]}';
+config.font_names = '$fonts';
 __EOH__
 	}
 
 	my $format_settings = '';
 	if ($hash->{'theme_advanced_format_setting'} eq 'custom') {
         my $types = $hash->{'theme_advanced_format_types'};
-		$format_settings = "CKEDITOR.config.format_tags = '$types';";
+		$format_settings = "config.format_tags = '$types';";
 	}
 
 	my $css_settings = '';
 	if ($hash->{'theme_content_css_type'} eq 'url') {
 		$css_settings = <<__EOH__;
-CKEDITOR.config.contentsCss = '@{[ $hash->{'theme_content_css_url'} ]}';
+config.contentsCss = '@{[ $hash->{'theme_content_css_url'} ]}';
 __EOH__
 	}
 	elsif ($hash->{'theme_content_css_type'} eq 'content') {
 		my $uri = $app->app_uri . '?__mode=ckeditor_content_css';
 		$css_settings = <<__EOH__;
-CKEDITOR.config.contentsCss = '$uri';
+config.contentsCss = '$uri';
 __EOH__
 	}
 
@@ -125,12 +123,7 @@ __EOH__
 		($hash->{'ckeditor_config_type'} eq 'custom')
 		&& (my $v = $hash->{'ckeditor_config_value'})
 	) {
-		$other_config = <<__EOC__;
-CKEDITOR.on('instanceCreated', function(__obj) {
-	var config = __obj.editor.config;
-	$v;
-});
-__EOC__
+		$other_config = "$v;";
 	}
 
 	if ($app->can('user')) {
@@ -155,7 +148,7 @@ __EOC__
 				$static_file_path, 'plugins', 'CKEditor', 'ckeditor',
 				'lang', $lang . '.js'
 		)) {
-			$lang = "CKEDITOR.config.language = '$lang';";
+			$lang = "config.language = '$lang';";
 		}
 		elsif (
 			($lang =~ m/(.*?)(-.*)/)
@@ -164,7 +157,7 @@ __EOC__
 				'lang', $1 . '.js'
 			)
 		)) {
-			$lang = "CKEDITOR.config.language = '$lang';";
+			$lang = "config.language = '$lang';";
 		}
 		else {
 			$lang = '';
@@ -202,17 +195,19 @@ var CKEditorObjectType = '@{[ $type ]}';
 		placement: null
 	});
 
-	$plugins
-	$buttons
-	$font_settings
-	$format_settings
-	$css_settings
-	$other_config
-	$lang
-
-	CKEDITOR.config.resize_event = true;
 	CKEDITOR.on('instanceCreated', function(__obj) {
 		var editor = __obj.editor;
+		var config = editor.config;
+
+		$plugins
+		$buttons
+		$font_settings
+		$format_settings
+		$css_settings
+		$other_config
+		$lang
+
+		config.resize_event = true;
 		editor.on('resizeComplete', function() {
 			container = editor.getResizable();
 			jQuery('#ckeditor_' + editor.name + '_height').val(
