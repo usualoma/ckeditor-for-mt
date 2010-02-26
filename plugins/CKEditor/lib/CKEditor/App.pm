@@ -181,19 +181,21 @@ var CKEditorBlogID = @{[ $blog->id ]};
 var CKEditorBlogThemeID = '@{[ $blog->theme_id ]}';
 var CKEditorObjectType = '@{[ $type ]}';
 (function() {
-	var editor_textarea_focus = Editor.Textarea.prototype.focus;
-	function focus() {
-		if (
-			(! this.element.disabled)
-			&& (this.element.style.display != 'none')
-		) {
-			editor_textarea_focus.call(this);
+	if (typeof(Editor) !== 'undefined') {
+		var editor_textarea_focus = Editor.Textarea.prototype.focus;
+		function focus() {
+			if (
+				(! this.element.disabled)
+				&& (this.element.style.display != 'none')
+			) {
+				editor_textarea_focus.call(this);
+			}
 		}
+		Editor.Textarea = new Class(Editor.Textarea, {
+			focus: focus,
+			placement: null
+		});
 	}
-	Editor.Textarea = new Class(Editor.Textarea, {
-		focus: focus,
-		placement: null
-	});
 
 	CKEDITOR.on('instanceCreated', function(__obj) {
 		var editor = __obj.editor;
