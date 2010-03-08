@@ -211,7 +211,7 @@ var CKEditorObjectType = '@{[ $type ]}';
 
 		config.resize_event = true;
 		editor.on('resizeComplete', function() {
-			container = editor.getResizable();
+			var container = editor.getResizable();
 			jQuery('#ckeditor_' + editor.name + '_height').val(
 				container.\$.offsetHeight
 			);
