@@ -111,6 +111,7 @@ sub _hdlr_javascript {
 	left: 0;
 	min-width: 950px;
 	opacity: 0.5;
+	filter: alpha(opacity=30);
 	position: absolute;
 	top: 0;
 	width: 100%;
@@ -127,6 +128,10 @@ sub _hdlr_javascript {
 }
 body {
 	position:relative;
+	height: 100%;
+}
+body.has-dialog {
+	overflow: hidden;
 }
 </style>
 __SCRIPT__
@@ -145,6 +150,8 @@ __SCRIPT__
 			$ctx->invoke_handler('AdminCGIPath', $args)
 			. $ctx->invoke_handler('AdminScript', $args);
 		$result .= <<__SCRIPT__
+<script type="text/javascript" src="${static_url}jquery/jquery.bgiframe.min.js?v=${version}"></script>
+<script type="text/javascript" src="${static_url}jquery/jquery.exfixed.js?v=${version}"></script>
 <script type="text/javascript" src="${static_url}jquery/jquery.mt.min.js?v=${version}"></script>
 <input type="hidden" name="blog-id" id="blog-id" value="$blog_id" />
 <script type="text/javascript">
