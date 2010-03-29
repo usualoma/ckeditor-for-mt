@@ -112,7 +112,19 @@ config.contentsCss = '@{[ $hash->{'theme_content_css_url'} ]}';
 __EOH__
 	}
 	elsif ($hash->{'theme_content_css_type'} eq 'content') {
-		my $uri = $app->app_uri . '?__mode=ckeditor_content_css';
+		my $cfg = $app->config;
+		my $ctx = $param->{'ctx'};
+		my $uri = ($ctx ?
+			(
+				$ctx->invoke_handler('AdminCGIPath') .
+				$ctx->invoke_handler('AdminScript')
+			) :
+			($app->can('app_uri') ?
+				$app->app_uri :
+				($cfg->AdminCGIPath || $cfg->CGIPath)
+			)
+		) . '?__mode=ckeditor_content_css';
+
 		$css_settings = <<__EOH__;
 config.contentsCss = '$uri';
 __EOH__
@@ -126,44 +138,57 @@ __EOH__
 		$other_config = "$v;";
 	}
 
+	my ($blog, $type, $lang);
+
 	if ($app->can('user')) {
-		my $q = $app->param;
-		my $type = $q->param('_type');
+		$blog = $app->blog;
+		$type = $app->param('_type');
+		$lang = $app->user->preferred_language;
+	}
 
-		my $blog = $app->blog;
-		my $lang = $app->user->preferred_language;
+	if (my $ctx = $param->{'ctx'}) {
+		$blog = $ctx->stash('blog');
+		if (my $entry = $ctx->stash('entry')) {
+			$type = $entry->class;
+		}
+		$lang = $blog->language;
+	}
 
-		my $l10n = File::Spec->catfile(
-			$static_file_path, 'plugins', 'CKEditor',
-			'lib', 'default', 'l10n', $lang . '.js'
-		);
-		if (-e $l10n) {
-			$l10n = '<script type="text/javascript" src="'.$static_url.'/plugins/CKEditor/lib/default/l10n/'.$lang.'.js"></script>';
-		}
-		else {
-			$l10n = '';
-		}
+	unless ($blog && $type && $lang) {
+		return '';
+	}
 
-		if (-e File::Spec->catfile(
-				$static_file_path, 'plugins', 'CKEditor', 'ckeditor',
-				'lang', $lang . '.js'
-		)) {
-			$lang = "config.language = '$lang';";
-		}
-		elsif (
-			($lang =~ m/(.*?)(-.*)/)
-			&& (-e File::Spec->catfile(
-				$static_file_path, 'plugins', 'CKEditor', 'ckeditor',
-				'lang', $1 . '.js'
-			)
-		)) {
-			$lang = "config.language = '$lang';";
-		}
-		else {
-			$lang = '';
-		}
+	my $l10n = File::Spec->catfile(
+		$static_file_path, 'plugins', 'CKEditor',
+		'lib', 'default', 'l10n', $lang . '.js'
+	);
+	if (-e $l10n) {
+		$l10n = '<script type="text/javascript" src="'.$static_url.'/plugins/CKEditor/lib/default/l10n/'.$lang.'.js"></script>';
+	}
+	else {
+		$l10n = '';
+	}
 
-		if ($param->{'wrapper'}) {
+	if (-e File::Spec->catfile(
+			$static_file_path, 'plugins', 'CKEditor', 'ckeditor',
+			'lang', $lang . '.js'
+	)) {
+		$lang = "config.language = '$lang';";
+	}
+	elsif (
+		($lang =~ m/(.*?)(-.*)/)
+		&& (-e File::Spec->catfile(
+			$static_file_path, 'plugins', 'CKEditor', 'ckeditor',
+			'lang', $1 . '.js'
+		)
+	)) {
+		$lang = "config.language = '$lang';";
+	}
+	else {
+		$lang = '';
+	}
+
+	if ($param->{'wrapper'}) {
 		<<__EOH__;
 <style type="text/css">
 #cke_contents_editor-content-textarea iframe,
@@ -220,13 +245,12 @@ var CKEditorObjectType = '@{[ $type ]}';
 })();
 </script>
 __EOH__
-		}
-		else {
+	}
+	else {
 		<<__EOH__;
 <script type="text/javascript" src="$static_url/plugins/CKEditor/ckeditor/ckeditor.js"></script>
 $defaults
 __EOH__
-		}
 	}
 }
 
