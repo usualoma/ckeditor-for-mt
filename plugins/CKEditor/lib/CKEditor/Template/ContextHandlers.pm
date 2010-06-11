@@ -171,7 +171,10 @@ __SCRIPT__
 	}
 
 	require CKEditor::App;
-	$result . &CKEditor::App::js_include({ 'wrapper' => $args->{'wrapper'} });;
+	$result . &CKEditor::App::js_include({
+		'wrapper' => $args->{'wrapper'},
+		'ctx'     => $ctx,
+	});
 }
 
 1;
