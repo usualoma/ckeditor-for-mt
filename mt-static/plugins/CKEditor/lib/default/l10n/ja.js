@@ -25,4 +25,6 @@ CKEDITOR.on('instanceCreated', function(obj) {
 	// 「打ち消し」ボタンで「del」要素を挿入する
 	config.coreStyles_strike = { element : 'del' };
 
+	// デフォルトでスペルチェック(SCAYT) を無効にする
+	config.scayt_autoStartup = false;
 });
