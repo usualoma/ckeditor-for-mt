@@ -191,7 +191,7 @@ MT.App = new Class( MT.App, {
 			resizer.style.display = 'none';
 
 			enclosure.save_border_width = enclosure.style.borderWidth;
-			enclosure.save_height = enclosure.style.height;
+			enclosure.save_height = jQuery(enclosure).height();
 
 			enclosure.style.borderWidth = '0px';
 			enclosure.style.height = 'auto';
@@ -206,7 +206,7 @@ MT.App = new Class( MT.App, {
 			resizer.style.display = '';
 
 			enclosure.style.borderWidth = enclosure.save_border_width || '';
-			enclosure.style.height = enclosure.save_height || '250px';
+			enclosure.style.height = enclosure.save_height || '';
 
 			if (this.editor.iframe) {
 				// When it is preserved without the format
