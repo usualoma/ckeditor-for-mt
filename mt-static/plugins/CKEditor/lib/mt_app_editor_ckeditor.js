@@ -191,7 +191,7 @@ MT.App = new Class( MT.App, {
 			resizer.style.display = 'none';
 
 			enclosure.save_border_width = enclosure.style.borderWidth;
-			enclosure.save_height = jQuery(enclosure).height();
+			enclosure.save_height = jQuery(enclosure).height() + 'px';
 
 			enclosure.style.borderWidth = '0px';
 			enclosure.style.height = 'auto';
