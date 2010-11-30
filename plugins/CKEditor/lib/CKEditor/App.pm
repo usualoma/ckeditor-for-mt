@@ -140,7 +140,7 @@ __EOH__
 
 	my ($blog, $type, $lang);
 
-	if ($app->can('user')) {
+	if ($app->can('user') && $app->user) {
 		$blog = $app->blog;
 		$type = $app->param('_type');
 		$lang = $app->user->preferred_language;
