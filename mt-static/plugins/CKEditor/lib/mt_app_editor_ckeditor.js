@@ -51,11 +51,12 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 				}
 			}
 		};
-		jQuery('#ckeditor_editor-content-textarea_height').each(function() {
-			if (this.value && this.value > 0) {
-				opt['height'] = this.value;
-			}
-		});
+
+		var height = getByID('ckeditor_editor-content-textarea_height');
+		if (height && height.value && height.value > 0) {
+			opt['height'] = height.value;
+		}
+
 		setTimeout(function() {
 			CKEDITOR.replace(id, opt);
 		}, 0);
@@ -173,25 +174,27 @@ MT.App = new Class( MT.App, {
     fixHTML: function( inserted ) { },
 
 	ckeditorUpdateTextareaMode: function(mode) {
+		var resizers;
 		var formated = getByID('formatted');
-		var resizer = (function() {
+		var for_each_resizers = function(func) {
 			var divs = formated.getElementsByTagName('div');
 			for (var i = 0; i < divs.length; i++) {
 				if (divs[i].className.match(/resizer/)) {
-					return divs[i];
+					func(divs[i]);
 				}
 			}
-			return null;
-		})();
+		};
 		var enclosure = getByID('editor-content-enclosure');
 
 		if (mode == 'richtext') {
 			getByID('editor-content-toolbar').style.display = 'none';
 			getByID('editor-content-iframe').style.display = 'none';
-			resizer.style.display = 'none';
+			for_each_resizers(function(resizer) {
+				resizer.style.display = 'none';
+			});
 
 			enclosure.save_border_width = enclosure.style.borderWidth;
-			enclosure.save_height = jQuery(enclosure).height() + 'px';
+			enclosure.save_height = enclosure.offsetHeight + 'px';
 
 			enclosure.style.borderWidth = '0px';
 			enclosure.style.height = 'auto';
@@ -203,10 +206,14 @@ MT.App = new Class( MT.App, {
 		else if (! this.last_mode || this.last_mode == 'richtext') {
 			getByID('editor-content-toolbar').style.display = '';
 			getByID('editor-content-iframe').style.display = '';
-			resizer.style.display = '';
+			for_each_resizers(function(resizer) {
+				resizer.style.display = '';
+			});
 
 			enclosure.style.borderWidth = enclosure.save_border_width || '';
-			enclosure.style.height = enclosure.save_height || '';
+			if (enclosure.save_height) {
+				enclosure.style.height = enclosure.save_height;
+			}
 
 			if (this.editor.iframe) {
 				// When it is preserved without the format
