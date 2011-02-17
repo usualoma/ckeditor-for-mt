@@ -5,6 +5,7 @@ package CKEditor::App;
 use strict;
 use File::Basename;
 use CKEditor::Field;
+use MT::Util qw( encode_js );
 
 sub plugin_data_post_save {
 	my ($cb, $obj, $original) = @_;
@@ -189,6 +190,16 @@ __EOH__
 	}
 
 	if ($param->{'wrapper'}) {
+        my $compat_mt4_instance_created = ($MT::VERSION < 5) ? <<__EOS__ : '';
+        if (navigator.appVersion.indexOf('MSIE') == -1) {
+            var dialog_container = getByID('dialog-container');
+            if (dialog_container) {
+                dialog_container.className = '';
+                dialog_container.style.zIndex = 3000;
+            }
+        }
+__EOS__
+
 		<<__EOH__;
 <style type="text/css">
 #cke_contents_editor-content-textarea iframe,
@@ -198,12 +209,16 @@ __EOH__
 	position: static;
 }
 </style>
+<script type="text/javascript">
+var CKEditorMTVersion = '@{[ $MT::VERSION ]}';
+</script>
 <script type="text/javascript" src="$static_url/plugins/CKEditor/ckeditor/ckeditor.js"></script>
 $defaults
 $l10n
 <script type="text/javascript">
 var CKEditorBlogID = @{[ $blog->id ]};
-var CKEditorBlogThemeID = '@{[ $blog->theme_id ]}';
+var CKEditorBlogThemeID = '@{[ $blog->can('theme_id') ? $blog->theme_id : '' ]}';
+var CKEditorBlogTemplateSet = '@{[ encode_js($blog->can('template_set') ? $blog->template_set : '') ]}';
 var CKEditorObjectType = '@{[ $type ]}';
 (function() {
 	if (typeof(Editor) !== 'undefined') {
@@ -223,6 +238,8 @@ var CKEditorObjectType = '@{[ $type ]}';
 	}
 
 	CKEDITOR.on('instanceCreated', function(__obj) {
+		$compat_mt4_instance_created
+
 		var editor = __obj.editor;
 		var config = editor.config;
 
@@ -237,9 +254,10 @@ var CKEditorObjectType = '@{[ $type ]}';
 		config.resize_event = true;
 		editor.on('resizeComplete', function() {
 			var container = editor.getResizable();
-			jQuery('#ckeditor_' + editor.name + '_height').val(
-				container.\$.offsetHeight
-			);
+			var height = getByID('ckeditor_' + editor.name + '_height');
+			if (height) {
+				height.value = container.\$.offsetHeight
+			}
 		});
 	});
 })();
@@ -334,11 +352,21 @@ sub param_edit_entry {
 				}
 			}
 		};
-		jQuery('#ckeditor_' + ids[i] + '_height').each(function() {
-			if (this.value && this.value > 0) {
-				opt['height'] = this.value;
-			}
-		});
+
+		var height = getByID('ckeditor_' + ids[i] + '_height');
+		if (height && height.value && height.value > 0) {
+			opt['height'] = height.value;
+		}
+
+		var input = getByID(ids[i]);
+		if (
+			input && input.parentNode &&
+			input.parentNode.className == 'textarea-wrapper'
+		) {
+			var input_parent = input.parentNode;
+			input_parent.parentNode.appendChild(input);
+			input_parent.parentNode.removeChild(input_parent);
+		}
 
 		CKEDITOR.replace(ids[i], opt);
 	}
@@ -436,6 +464,10 @@ sub init_request {
 	if ($plugin->get_config_value('ckeditor_for_body', 'blog:' . $blog_id)) {
 		$app->config('RichTextEditor', 'CKEditor');
 
+		if ($MT::VERSION < 5) {
+			$plugin->{registry}{richtext_editors}{ckeditor}{template} =
+				'ckeditor_compat_mt4.tmpl'
+		}
 		$plugin->{registry}->{richtext_editors}->{archetype} =
 			$plugin->{registry}->{richtext_editors}->{ckeditor};
 	}

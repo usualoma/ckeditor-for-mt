@@ -122,4 +122,6 @@ Times New Roman/Times New Roman, Times, serif
 Trebuchet MS/Trebuchet MS, Helvetica, sans-serif
 Verdana/Verdana, Geneva, sans-serif
 __EOC__
+
+	'[_1] Plugin Settings' => '[_1]のプラグイン設定',
 );
