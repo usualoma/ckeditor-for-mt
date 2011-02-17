@@ -21,7 +21,7 @@ __PACKAGE__->install_properties({
 	},
 	audit => 1,
 	indexes => {
-		blog_id_field => {
+		blog_field => {
 			columns => [ 'blog_id', 'field' ],
 		}
 	},
