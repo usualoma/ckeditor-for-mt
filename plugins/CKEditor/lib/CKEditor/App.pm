@@ -32,7 +32,12 @@ sub ckeditor_plugins {
 		'ckeditor', 'plugins'
 	);
 
-	my @ignores = ('dialog', 'dialogui', 'domiterator', 'editingblock', 'fakeobjects', 'floatpanel', 'htmlwriter', 'iframedialog', 'listblock', 'menu', 'menubutton', 'panel', 'panelbutton', 'richcombo', 'selection', 'styles', 'uicolor');
+	my @ignores = qw(
+		dialog dialogui domiterator editingblock fakeobjects floatpanel
+		htmlwriter iframedialog listblock menu menubutton panel panelbutton
+		richcombo selection styles uicolor
+		tableresize autogrow adobeair placeholder
+	);
 
 	opendir(my $dh, $dir);
 	my @plugins = grep({
