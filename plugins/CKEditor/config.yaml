@@ -113,6 +113,9 @@ settings:
     ckeditor_config_value:
         Default:
 
+    ckeditor_html5_format:
+        Default: 0
+
 tags:
     function:
         CKEditorIncludeCustomizedFields: CKEditor::Template::ContextHandlers::_hdlr_include_customized_fields

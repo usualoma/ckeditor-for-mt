@@ -28,3 +28,7 @@ CKEDITOR.on('instanceCreated', function(obj) {
 	// デフォルトでスペルチェック(SCAYT) を無効にする
 	config.scayt_autoStartup = false;
 });
+
+
+// 翻訳語の追加
+CKEDITOR.lang.ja.format['tag_time'] = 'Time要素';

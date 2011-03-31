@@ -90,6 +90,10 @@ __EOB__
 __EOS__
 	}  &ckeditor_defaults($static_file_path)));
 
+	if ($hash->{'ckeditor_html5_format'}) {
+		$defaults .= qq{<script type="text/javascript" src="$static_url/plugins/CKEditor/lib/html5.js"></script>\n};
+	}
+
 	my $font_settings = '';
 	if ($hash->{'theme_advanced_font_setting'} eq 'custom') {
         my $fonts = $hash->{'theme_advanced_fonts'};
