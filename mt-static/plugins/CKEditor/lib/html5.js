@@ -8,6 +8,29 @@ var html5elements = [
 	}
 ];
 
+var overrided_style_class = false;
+function override_style_class() {
+	if (overrided_style_class) {
+		return;
+	}
+	overrided_style_class = true;
+
+	var blockElements	= {section:1,header:1,footer:1,nav:1,article:1,aside:1,figure:1,dialog:1,hgroup:1,time:1,meter:1,menu:1,command:1,keygen:1,output:1,progress:1,details:1,datagrid:1,datalist:1};
+	var objectElements	= {audio:1,video:1};
+	var original_style_class = CKEDITOR.style;
+	CKEDITOR.style = function() {
+		original_style_class.apply(this, arguments);
+		if (blockElements[this.element]) {
+			this.type = CKEDITOR.STYLE_BLOCK;
+		}
+		else if (objectElements[this.element]) {
+			this.type = CKEDITOR.STYLE_OBJECT;
+		}
+	}
+	CKEDITOR.style.prototype    = original_style_class.prototype;
+	CKEDITOR.style.getStyleText = original_style_class.getStyleText;
+}
+
 CKEDITOR.on('instanceCreated', function(obj) {
 	var config = obj.editor.config;
 
@@ -20,6 +43,8 @@ CKEDITOR.on('instanceCreated', function(obj) {
 		config['format_tags'] += ';' + tag;
 		config['format_' + tag] = element;
 	}
+
+	override_style_class();
 });
 
 CKEDITOR.on('instanceReady', function(obj) {
