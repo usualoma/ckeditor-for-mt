@@ -460,9 +460,12 @@ input.checked = 'checked';
 </mt:if>
 
 
+<mt:Var name="flag" value="$CKEditorHTML5Feature" />
+<mt:If name="flag">
 <p style="border-bottom: 1px solid #ccc;">
 <__trans phrase="Add HTML5 elements to format toolbar item">
 </p>
 <mtapp:setting id="ckeditor_html5_format">
 <input type="checkbox" id="ckeditor_html5_format" name="ckeditor_html5_format" value="1" <mt:If name="ckeditor_html5_format">checked="checked"</mt:If> />
 </mtapp:setting>
+</mt:If>

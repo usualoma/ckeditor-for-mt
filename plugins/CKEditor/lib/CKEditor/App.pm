@@ -407,6 +407,12 @@ __EOI__
 	}
 }
 
+sub source_system_config {
+	my ($cb, $app, $str, $fname) = @_;
+	my $enabled = $app->config('CKEditorHTML5Feature') ? 1 : 0;
+	$$str =~ s/\$CKEditorHTML5Feature/$enabled/g;
+}
+
 sub entry_post_save {
 	my ($cb, $obj, $original) = @_;
 	my $plugin = MT->component('CKEditor');
