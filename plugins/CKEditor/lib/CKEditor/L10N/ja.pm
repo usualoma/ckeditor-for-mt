@@ -67,6 +67,8 @@ use vars qw( %Lexicon );
 	'OtherSettingDefault', => 'デフォルト',
 	'Configuration values.' => '設定値',
 
+	'[_1] Plugin Settings' => '[_1]のプラグイン設定',
+
 	'Config example contents.' => <<__EOC__,
 // Wordから貼り付けをした際にスタイルを除去する
 config.pasteFromWordRemoveStyle = true;
@@ -122,6 +124,4 @@ Times New Roman/Times New Roman, Times, serif
 Trebuchet MS/Trebuchet MS, Helvetica, sans-serif
 Verdana/Verdana, Geneva, sans-serif
 __EOC__
-
-	'[_1] Plugin Settings' => '[_1]のプラグイン設定',
 );
