@@ -31,4 +31,16 @@ CKEDITOR.on('instanceCreated', function(obj) {
 
 
 // 翻訳語の追加
-CKEDITOR.lang.ja.format['tag_time'] = 'Time要素';
+CKEDITOR.lang.ja.format['tag_section'] = 'section 要素';
+CKEDITOR.lang.ja.format['tag_article'] = 'article 要素';
+CKEDITOR.lang.ja.format['tag_aside'] = 'aside 要素';
+CKEDITOR.lang.ja.format['tag_hgroup'] = 'hgroup 要素';
+CKEDITOR.lang.ja.format['tag_figure'] = 'figure 要素';
+CKEDITOR.lang.ja.format['tag_figcaption'] = 'figcaption 要素';
+CKEDITOR.lang.ja.format['tag_time'] = 'time 要素';
+CKEDITOR.lang.ja.format['tag_mark'] = 'mark 要素';
+CKEDITOR.lang.ja.format['tag_ruby'] = 'ruby 要素';
+CKEDITOR.lang.ja.format['tag_rt'] = 'rt 要素';
+CKEDITOR.lang.ja.format['tag_rp'] = 'rp 要素';
+CKEDITOR.lang.ja.format['tag_wbr'] = 'wbr 要素';
+CKEDITOR.lang.ja.format['tag_source'] = 'source 要素';

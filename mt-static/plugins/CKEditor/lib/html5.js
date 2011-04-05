@@ -2,10 +2,71 @@
 
 var html5elements = [
 	{
-		element : 'time',
-		label: 'Time',
+		element : 'section',
+		label: 'section',
 		attributes : { }
-	}
+	},
+	{
+		element : 'article',
+		label: 'article',
+		attributes : { }
+	},
+	{
+		element : 'aside',
+		label: 'aside',
+		attributes : { }
+	},
+	{
+		element : 'hgroup',
+		label: 'hgroup',
+		attributes : { }
+	},
+	{
+		element : 'figure',
+		label: 'figure',
+		attributes : { }
+	},
+	{
+		element : 'figcaption',
+		label: 'figcaption',
+		attributes : { }
+	},
+	{
+		element : 'time',
+		label: 'time',
+		attributes : { }
+	},
+	{
+		element : 'mark',
+		label: 'mark',
+		attributes : { }
+	},
+	{
+		element : 'ruby',
+		label: 'ruby',
+		attributes : { }
+	},
+	{
+		element : 'rt',
+		label: 'rt',
+		attributes : { }
+	},
+	{
+		element : 'rp',
+		label: 'rp',
+		attributes : { }
+	},
+	{
+		element : 'wbr',
+		label: 'wbr',
+		attributes : { }
+	},
+	{
+		element : 'source',
+		label: 'source',
+		attributes : { }
+	},
+	null
 ];
 
 var overrided_style_class = false;
@@ -39,6 +100,9 @@ CKEDITOR.on('instanceCreated', function(obj) {
 	}
 	for (var i = 0, len = html5elements.length; i < len; i++) {
 		var element = html5elements[i];
+		if (! element) {
+			continue;
+		}
 		var tag = element['tag'] || element['element'];
 		config['format_tags'] += ';' + tag;
 		config['format_' + tag] = element;
@@ -51,6 +115,9 @@ CKEDITOR.on('instanceReady', function(obj) {
 	var f = obj.editor.lang.format;
 	for (var i = 0, len = html5elements.length; i < len; i++) {
 		var element = html5elements[i];
+		if (! element) {
+			continue;
+		}
 		var tag = element['tag'] || element['element'];
 		var key = 'tag_' + tag;
 		if (! f[key]) {
