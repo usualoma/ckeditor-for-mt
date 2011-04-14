@@ -1,5 +1,5 @@
 DESTDIR = 
-files = LICENSE.html ckeditor.js contents.css images lang plugins skins themes
+files = LICENSE.html ckeditor.js config.js contents.css images lang plugins skins themes
 
 all: build
 
@@ -9,7 +9,6 @@ install: build
 		false; \
 	fi
 	mkdir -p ${DESTDIR}
-	cp config.js ${DESTDIR}/config.js
 	cp -R lib ${DESTDIR}/lib
 	cp -R template ${DESTDIR}/template
 	cp -R style ${DESTDIR}/style
