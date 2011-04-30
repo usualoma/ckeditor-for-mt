@@ -193,11 +193,13 @@ MT.App = new Class( MT.App, {
 				resizer.style.display = 'none';
 			});
 
-			enclosure.save_border_width = enclosure.style.borderWidth;
-			enclosure.save_height = enclosure.offsetHeight + 'px';
+			if (enclosure.offsetHeight > 10) {
+				enclosure.save_border_width = enclosure.style.borderWidth;
+				enclosure.save_height = enclosure.offsetHeight + 'px';
 
-			enclosure.style.borderWidth = '0px';
-			enclosure.style.height = 'auto';
+				enclosure.style.borderWidth = '0px';
+				enclosure.style.height = 'auto';
+			}
 
 			if (this.last_mode && this.editor.iframe) {
 				this.editor.iframe.ckeditorShow();
