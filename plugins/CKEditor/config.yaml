@@ -113,6 +113,9 @@ settings:
     ckeditor_config_value:
         Default:
 
+    ckeditor_html5_format:
+        Default: 0
+
 tags:
     function:
         CKEditorIncludeCustomizedFields: CKEditor::Template::ContextHandlers::_hdlr_include_customized_fields
@@ -121,6 +124,7 @@ tags:
 
 callbacks:
     MT::App::CMS::template_param.edit_entry: CKEditor::App::param_edit_entry
+    MT::App::CMS::template_source.ckeditor_system_config: CKEditor::App::source_system_config
     MT::Entry::post_save: CKEditor::App::entry_post_save
     MT::PluginData::post_save: CKEditor::App::plugin_data_post_save
 
