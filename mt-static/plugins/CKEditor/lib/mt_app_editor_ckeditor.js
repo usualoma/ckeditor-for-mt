@@ -44,7 +44,7 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 		var opt = {
 			on: {
 				instanceReady: function(ev) {
-					editor.ckeditor = CKEDITOR.instances[id];
+					editor.ckeditor = this;
 				},
 				key: function(ev) {
 					editor.setChanged();
@@ -70,8 +70,6 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 
 	ckeditorHideAndSetInitial: function(value) {
 		this.ckeditorInitialized(function() {
-			//this.ckeditor.hide();
-			//this.ckeditor.getElement().value = this.initial_contents;
 			this.ckeditor.destroy();
 
 			document.getElementById(
@@ -105,12 +103,28 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 
     /* Get the editor content as html/xhtml */
     getHTML: function() {
-        return this.ckeditor.getData();
+		var content = null;
+		try {
+			if (this.ckeditor && this.ckeditor.id) {
+				content = this.ckeditor.getData();
+			}
+		} catch(e) {
+			;
+		}
+		return content || document.getElementById(this.ckeditor.name).value;
     },
 
     /* Get the editor content as xhtml ( if possible, else return html ) */
     getXHTML: function() {
-        return this.ckeditor.getData();
+		var content = null;
+		try {
+			if (this.ckeditor && this.ckeditor.id) {
+				content = this.ckeditor.getData();
+			}
+		} catch(e) {
+			;
+		}
+		return content || document.getElementById(this.ckeditor.name).value;
     },
 
     /* Set the html content of the editor */
@@ -193,11 +207,13 @@ MT.App = new Class( MT.App, {
 				resizer.style.display = 'none';
 			});
 
-			enclosure.save_border_width = enclosure.style.borderWidth;
-			enclosure.save_height = enclosure.offsetHeight + 'px';
+			if (enclosure.offsetHeight > 10) {
+				enclosure.save_border_width = enclosure.style.borderWidth;
+				enclosure.save_height = enclosure.offsetHeight + 'px';
 
-			enclosure.style.borderWidth = '0px';
-			enclosure.style.height = 'auto';
+				enclosure.style.borderWidth = '0px';
+				enclosure.style.height = 'auto';
+			}
 
 			if (this.last_mode && this.editor.iframe) {
 				this.editor.iframe.ckeditorShow();

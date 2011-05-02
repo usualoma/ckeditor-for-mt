@@ -32,7 +32,12 @@ sub ckeditor_plugins {
 		'ckeditor', 'plugins'
 	);
 
-	my @ignores = ('dialog', 'dialogui', 'domiterator', 'editingblock', 'fakeobjects', 'floatpanel', 'htmlwriter', 'iframedialog', 'listblock', 'menu', 'menubutton', 'panel', 'panelbutton', 'richcombo', 'selection', 'styles', 'uicolor');
+	my @ignores = qw(
+		dialog dialogui domiterator editingblock fakeobjects floatpanel
+		htmlwriter iframedialog listblock menu menubutton panel panelbutton
+		richcombo selection styles uicolor
+		tableresize autogrow adobeair placeholder
+	);
 
 	opendir(my $dh, $dir);
 	my @plugins = grep({
@@ -89,6 +94,10 @@ __EOB__
 <script type="text/javascript" src="$static_url/plugins/CKEditor/lib/default/$_"></script>
 __EOS__
 	}  &ckeditor_defaults($static_file_path)));
+
+	if ($hash->{'ckeditor_html5_format'}) {
+		$defaults .= qq{<script type="text/javascript" src="$static_url/plugins/CKEditor/lib/html5.js"></script>\n};
+	}
 
 	my $font_settings = '';
 	if ($hash->{'theme_advanced_font_setting'} eq 'custom') {
@@ -401,6 +410,12 @@ __EOI__
 		my $node = $tmpl->createTextNode($heights);
 		$tmpl->insertAfter($node, $field);
 	}
+}
+
+sub source_system_config {
+	my ($cb, $app, $str, $fname) = @_;
+	my $enabled = $app->config('CKEditorHTML5Feature') ? 1 : 0;
+	$$str =~ s/\$CKEditorHTML5Feature/$enabled/g;
 }
 
 sub entry_post_save {

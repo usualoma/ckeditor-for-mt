@@ -68,6 +68,7 @@ use vars qw( %Lexicon );
 	'Configuration values.' => '設定値',
 
 	'[_1] Plugin Settings' => '[_1]のプラグイン設定',
+	'Add HTML5 elements to format toolbar item' => 'HTML5の要素をフォーマットのプルダウンメニューに追加する',
 
 	'Config example contents.' => <<__EOC__,
 // Wordから貼り付けをした際にスタイルを除去する
