@@ -1,0 +1,1 @@
+/home/taku/public_html/mt/CKEditor/mt-static/plugins/CKEditor/config.js
