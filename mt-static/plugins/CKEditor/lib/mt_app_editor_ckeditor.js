@@ -44,7 +44,7 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 		var opt = {
 			on: {
 				instanceReady: function(ev) {
-					editor.ckeditor = CKEDITOR.instances[id];
+					editor.ckeditor = this;
 				},
 				key: function(ev) {
 					editor.setChanged();
@@ -70,8 +70,6 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 
 	ckeditorHideAndSetInitial: function(value) {
 		this.ckeditorInitialized(function() {
-			//this.ckeditor.hide();
-			//this.ckeditor.getElement().value = this.initial_contents;
 			this.ckeditor.destroy();
 
 			document.getElementById(
@@ -105,12 +103,28 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 
     /* Get the editor content as html/xhtml */
     getHTML: function() {
-        return this.ckeditor.getData();
+		var content = null;
+		try {
+			if (this.ckeditor && this.ckeditor.id) {
+				content = this.ckeditor.getData();
+			}
+		} catch(e) {
+			;
+		}
+		return content || document.getElementById(this.ckeditor.name).value;
     },
 
     /* Get the editor content as xhtml ( if possible, else return html ) */
     getXHTML: function() {
-        return this.ckeditor.getData();
+		var content = null;
+		try {
+			if (this.ckeditor && this.ckeditor.id) {
+				content = this.ckeditor.getData();
+			}
+		} catch(e) {
+			;
+		}
+		return content || document.getElementById(this.ckeditor.name).value;
     },
 
     /* Set the html content of the editor */
