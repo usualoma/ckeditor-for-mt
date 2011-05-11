@@ -479,10 +479,16 @@ sub init_request {
 	if ($plugin->get_config_value('ckeditor_for_body', 'blog:' . $blog_id)) {
 		$app->config('RichTextEditor', 'CKEditor');
 
-		if ($MT::VERSION < 5) {
-			$plugin->{registry}{richtext_editors}{ckeditor}{template} =
-				'ckeditor_compat_mt4.tmpl'
-		}
+        if ($MT::VERSION < 5.1) {
+		    if ($MT::VERSION < 5) {
+			    $plugin->{registry}{richtext_editors}{ckeditor}{template} =
+				    'ckeditor_compat_mt4.tmpl'
+		    }
+            else {
+			    $plugin->{registry}{richtext_editors}{ckeditor}{template} =
+				    'ckeditor_compat_mt50.tmpl'
+            }
+        }
 		$plugin->{registry}->{richtext_editors}->{archetype} =
 			$plugin->{registry}->{richtext_editors}->{ckeditor};
 	}
