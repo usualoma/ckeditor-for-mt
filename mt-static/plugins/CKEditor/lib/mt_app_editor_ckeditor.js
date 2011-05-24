@@ -75,6 +75,15 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 			document.getElementById(
 				'editor-content-textarea'
 			).value = this.initial_contents;
+
+			// Force display. (For Firefix)
+			var i = 0;
+			var interval_id = setInterval(function() {
+				getByID('editor-content-textarea').style.display = '';
+				if (++i >= 10) {
+					clearInterval(interval_id);
+				}
+			}, 100);
 		});
 	},
 
