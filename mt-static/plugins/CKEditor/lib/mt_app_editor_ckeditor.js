@@ -62,28 +62,37 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 		}, 0);
 	},
 
+	forceDisplayTextarea: function() {
+		// Force display. (For Gecko)
+		if (navigator.userAgent.indexOf("Gecko/") != -1) {
+			var textarea = getByID('editor-content-textarea');
+			var i = 0;
+			var interval_id = setInterval(function() {
+				textarea.style.display  = '';
+				textarea.style.position = '';
+				textarea.style.top      = '';
+				if (++i >= 10) {
+					clearInterval(interval_id);
+				}
+			}, 100);
+		}
+	},
+
 	ckeditorHide: function() {
 		this.ckeditorInitialized(function() {
 			this.ckeditor.destroy();
+			this.forceDisplayTextarea();
 		});
 	},
 
 	ckeditorHideAndSetInitial: function(value) {
 		this.ckeditorInitialized(function() {
 			this.ckeditor.destroy();
+			this.forceDisplayTextarea();
 
 			document.getElementById(
 				'editor-content-textarea'
 			).value = this.initial_contents;
-
-			// Force display. (For Firefix)
-			var i = 0;
-			var interval_id = setInterval(function() {
-				getByID('editor-content-textarea').style.display = '';
-				if (++i >= 10) {
-					clearInterval(interval_id);
-				}
-			}, 100);
 		});
 	},
 
