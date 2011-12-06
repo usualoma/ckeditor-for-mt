@@ -7,6 +7,8 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
     version: '0.1',
     changed: false,
 
+    ckeditor_id: 'editor-content-textarea',
+
     initObject: function(element, mode) {
         arguments.callee.applySuper( this, arguments );
 
@@ -15,7 +17,6 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 
 		this.ckeditorShow();
 
-		var interval = 5*1000;
 		var editor = this;
 
 		editor.initial_contents = document.getElementById(
@@ -39,7 +40,6 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 	},
 
 	ckeditorShow: function() {
-		var id = 'editor-content-textarea';
 		var editor = this;
 		var opt = {
 			on: {
@@ -58,14 +58,26 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 		}
 
 		setTimeout(function() {
-			CKEDITOR.replace(id, opt);
+			CKEDITOR.replace(editor.ckeditor_id, opt);
 		}, 0);
 	},
+
+	ckeditorDestroy: function(callback) {
+		this.ckeditorInitialized(function() {
+			this.ckeditor.destroy();
+            this.ckeditor = null;
+			this.forceDisplayTextarea();
+
+            if (callback) {
+			    callback.apply(this, []);
+            }
+		});
+    },
 
 	forceDisplayTextarea: function() {
 		// Force display. (For Gecko)
 		if (navigator.userAgent.indexOf("Gecko/") != -1) {
-			var textarea = getByID('editor-content-textarea');
+			var textarea = getByID(this.ckeditor_id);
 			var i = 0;
 			var interval_id = setInterval(function() {
 				textarea.style.display  = '';
@@ -79,27 +91,20 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 	},
 
 	ckeditorHide: function() {
-		this.ckeditorInitialized(function() {
-			this.ckeditor.destroy();
-			this.forceDisplayTextarea();
-		});
+		this.ckeditorDestroy();
 	},
 
-	ckeditorHideAndSetInitial: function(value) {
-		this.ckeditorInitialized(function() {
-			this.ckeditor.destroy();
-			this.forceDisplayTextarea();
-
-			document.getElementById(
-				'editor-content-textarea'
-			).value = this.initial_contents;
-		});
-	},
+    ckeditorHideAndSetInitial: function(value) {
+        this.ckeditorDestroy(function() {
+            document.getElementById(this.ckeditor_id).value =
+                this.initial_contents;
+        });
+    },
 
     /* Clear the dirty flag on the editor ( dirty == modified ) */
     clearDirty: function() {
 		this.ckeditorInitialized(function() {
-			if (CKEDITOR.instances[this.ckeditor.name]) {
+			if (CKEDITOR.instances[this.ckeditor_id]) {
 				this.ckeditor.resetDirty();
 				this.changed = false;
 			}
@@ -129,7 +134,7 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 		} catch(e) {
 			;
 		}
-		return content || document.getElementById(this.ckeditor.name).value;
+		return content || document.getElementById(this.ckeditor_id).value;
     },
 
     /* Get the editor content as xhtml ( if possible, else return html ) */
@@ -142,7 +147,7 @@ MT.App.Editor.Iframe = new Class( Editor.Iframe, {
 		} catch(e) {
 			;
 		}
-		return content || document.getElementById(this.ckeditor.name).value;
+		return content || document.getElementById(this.ckeditor_id).value;
     },
 
     /* Set the html content of the editor */
@@ -265,7 +270,7 @@ MT.App = new Class( MT.App, {
 
 	autoSave: function() {
 		for (k in CKEDITOR.instances) {
-			if (k == 'editor-content-textarea') {
+			if (k == this.ckeditor_id) {
 				continue;
 			}
 			CKEDITOR.instances[k].updateElement();
