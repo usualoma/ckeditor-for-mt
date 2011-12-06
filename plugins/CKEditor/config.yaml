@@ -3,7 +3,7 @@
 
 #plugin name
 name: CKEditor for Movable Type
-version: 1.073
+version: 1.074
 
 #about this plugin
 description: <__trans phrase="Enable to edit field by CKEditor">
@@ -127,6 +127,8 @@ callbacks:
     MT::App::CMS::template_source.ckeditor_system_config: CKEditor::App::source_system_config
     MT::Entry::post_save: CKEditor::App::entry_post_save
     MT::PluginData::post_save: CKEditor::App::plugin_data_post_save
+    cms_save_permission_filter.ckeditor_field: "sub { return 0; }"
+    cms_delete_permission_filter.ckeditor_field: "sub { return 0; }"
 
 richtext_editors:
     ckeditor:
