@@ -21,7 +21,7 @@ distclean:
 dist:
 	rm -fr /tmp/${BASENAME}*
 	mkdir -p /tmp/${BASENAME}/plugins /tmp/${BASENAME}/mt-static/plugins
-	cp -pbR plugins/${NAME} /tmp/${BASENAME}/plugins/${NAME}
+	cp -pR plugins/${NAME} /tmp/${BASENAME}/plugins/${NAME}
 	rm -fr /tmp/${BASENAME}/plugins/${NAME}/t
 	cp INSTALL* AUTHOR* /tmp/${BASENAME}/
 	make DESTDIR=/tmp/${BASENAME}/mt-static/plugins/${NAME} -C mt-static/plugins/CKEditor install
