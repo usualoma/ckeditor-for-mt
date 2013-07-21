@@ -36,7 +36,7 @@ sub ckeditor_plugins {
 		dialog dialogui domiterator editingblock fakeobjects floatpanel
 		htmlwriter iframedialog listblock menu menubutton panel panelbutton
 		richcombo selection styles uicolor
-		tableresize autogrow adobeair placeholder
+		tableresize autogrow adobeair placeholder bbcode
 	);
 
 	opendir(my $dh, $dir);

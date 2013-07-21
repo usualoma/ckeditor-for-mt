@@ -1,5 +1,6 @@
 DESTDIR = 
 files = LICENSE.html ckeditor.js config.js contents.css images lang plugins skins themes
+zcat = $(shell if type gzcat >/dev/null 2>&1; then echo gzcat; else echo zcat; fi) 
 
 all: build
 
@@ -22,7 +23,7 @@ build: unpack
 	java -jar ckreleaser.jar ckeditor_src/ckeditor.release ckeditor_src/ ckeditor_src/release 1 package
 	ln -sf ckeditor_src/release/release ckeditor
 	rm ckeditor/config.js
-	ln -sf `pwd`/config.js ckeditor/config.js
+	cp `pwd`/config.js ckeditor/config.js
 
 unpack: ckeditor_src/_source/core/ckeditor.js
 
@@ -32,7 +33,7 @@ ckeditor_src/_source/core/ckeditor.js:
 		tar zxf $$f; \
 	done
 	for f in *patch.gz; do \
-		zcat $$f | (cd ckeditor; patch -p1) \
+		${zcat} $$f | (cd ckeditor; patch -p1) \
 	done
 	mv ckeditor ckeditor_src
 
